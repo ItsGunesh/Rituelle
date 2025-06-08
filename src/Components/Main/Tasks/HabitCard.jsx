@@ -11,7 +11,7 @@ const HabitCard = () => {
         </div>
         <div className='flex flex-col gap-0 py-1'>
             <p className='text-lg font-bold'>Wake Up</p>
-            <p className='text-sm'>12 Days</p>
+            <p className='text-xs'>12 Days</p>
         </div>
       </div>
     </>

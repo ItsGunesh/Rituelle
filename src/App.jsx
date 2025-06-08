@@ -15,6 +15,7 @@ function App() {
         <Navigator/>
       </div>
       <div className='bg-gray-200 h-[100%] w-[100%] py-4 px-10 box-border flex gap-4'>
+        <HabitsIndex/>
         <TaskIndex/>
       </div>
       <div>
