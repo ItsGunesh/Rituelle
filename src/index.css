@@ -1,5 +1,11 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-* {
-  font-family: 'Nunito Sans', sans-serif;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Test class to verify font loading */
+.test-font {
+  font-family: 'Amaranth', sans-serif;
+  font-weight: 700;
 }
