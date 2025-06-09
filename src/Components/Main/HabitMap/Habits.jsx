@@ -5,7 +5,7 @@ const Habits = () => {
   const habits = ["Wake Up", "Meditate", "Gym", "DSA", "Web Dev", "Diet", "Junk", "Social", "Skin Care", "Reading"]
   return (
     <>
-      <div className='p-4 border-2 rounded-2xl border-gray-400 flex bg-white'>
+      <div className='p-4 border-2 rounded-2xl border-gray-400 flex gap-4 bg-white'>
         <div className='text-xs font-bold w-[8%]'>
           <p>Wake Up</p>
           <p>Meditate</p>

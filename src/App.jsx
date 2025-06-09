@@ -5,6 +5,7 @@ import './App.css'
 import Navigator from './Components/Navigator/Navigator'
 import TaskIndex from './Components/Main/Tasks/TaskIndex'
 import HabitsIndex from './Components/Main/HabitMap/HabitsIndex'
+import MaxMin from './Components/Main/HabitMap/MaxMin'
 
 function App() {
   const [count, setCount] = useState(0)
