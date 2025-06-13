@@ -7,7 +7,7 @@ const HabitsIndex = () => {
   return (
     <>
       <div className='flex flex-col gap-4'>
-        <div className='p-4 bg-gray-100 w-[100%] h-fit border-1 rounded-2xl border-gray-400 shadow-xl '>
+        <div className='p-4 bg-gray-100 w-[75vw] h-fit border-1 rounded-2xl border-gray-400 shadow-xl '>
         <h3 className='font-bold text-2xl py-4'>Habits Heatmap</h3>
         <Habits/>
       </div>

@@ -6,17 +6,10 @@ const Habits = () => {
   return (
     <>
       <div className='p-4 border-2 rounded-2xl border-gray-400 flex gap-4 bg-white'>
-        <div className='text-xs font-bold w-[8%]'>
-          <p>Wake Up</p>
-          <p>Meditate</p>
-          <p>Gym</p>
-          <p>DSA</p>
-          <p>WebDev</p>
-          <p>Diet</p>
-          <p>Junk</p>
-          <p>Social</p>
-          <p>Self Care</p>
-          <p>Read</p>
+        <div className='text-xs font-bold w-fit flex flex-col gap-0'>
+          {habits.map((item,ind)=>(
+            <p>{item}</p>
+          ))}
         </div>
         <div className='flex gap-1'>
           <Cell/>
@@ -82,6 +75,7 @@ const Habits = () => {
           <Cell/>
           <Cell/>
           <Cell/>
+
         </div>
       </div>
       <div className='flex justify-between text-sm font-bold pt-3 text-gray-600'>
