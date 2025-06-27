@@ -12,7 +12,7 @@ const MaxMin = ({habit , type , value}) => {
           <p className='text-xs '>{type}</p>
           <ProgressBar value={value}/>
           <div className='flex justify-center'>
-            <FontAwesomeIcon icon={faChartLine}  className='text-9xl'/>
+            {/* <FontAwesomeIcon icon={faChartLine}  className='text-9xl'/> */}
           </div>
         </div>
       </div>
