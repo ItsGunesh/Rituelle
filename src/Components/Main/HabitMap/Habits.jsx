@@ -8,7 +8,7 @@ const Habits = () => {
       <div className='p-4 border-2 rounded-2xl border-gray-400 flex gap-4 bg-white'>
         <div className='text-xs font-bold w-fit flex flex-col gap-0'>
           {habits.map((item,ind)=>(
-            <p>{item}</p>
+            <p key={item + ind}>{item}</p>
           ))}
         </div>
         <div className='flex gap-1'>

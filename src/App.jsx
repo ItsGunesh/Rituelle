@@ -5,13 +5,13 @@ import './App.css'
 import Navigator from './Components/Navigator/Navigator'
 import TaskIndex from './Components/Main/Tasks/TaskIndex'
 import HabitsIndex from './Components/Main/HabitMap/HabitsIndex'
-import MaxMin from './Components/Main/HabitMap/MaxMin'
+import HabitContextProvider from './Context/HabitContextProvider'
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
+      <HabitContextProvider>
       <div className='sticky top-0 z-999'>
         <Navigator/>
       </div>
@@ -21,6 +21,7 @@ function App() {
       </div>
       <div>
       </div>
+      </HabitContextProvider>
     </>
   )
 }
