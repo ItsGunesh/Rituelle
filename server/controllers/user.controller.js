@@ -5,6 +5,11 @@ const userRegister = asyncHandler((req,res)=>{
     json({
         message:"ok"
     })
+
+    const {username,email,password,fullName} = req.body
+    console.log(email)
 })
+
+
 
 export {userRegister}
