@@ -2,13 +2,17 @@ import { model } from "mongoose"
 import { ApiError } from "../utils/apiError.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { User } from "../models/user.model.js"
+import {ApiResponse} from "../utils/apiResponse.js"
 
 
 const generateAccessAndRefereshTokens = async (userId) => {
     try {
         const user = await User.findById(userId)
+        console.log(user)
         const accessToken = user.generateAccessToken()
+        console.log(accessToken)
         const refreshToken = user.generateRefreshToken()
+        console.log(refreshToken)
 
         user.refreshToken = refreshToken
         await user.save({ validateBeforeSave: false })
@@ -17,7 +21,7 @@ const generateAccessAndRefereshTokens = async (userId) => {
 
 
     } catch (error) {
-        throw new ApiError(500, "Something went wrong while generating referesh and access token")
+        throw new ApiError(500, "Something went wrong while generating referesh and access token" , error)
     }
 
 
@@ -89,7 +93,7 @@ const userLogin = asyncHandler(async (req, res) => {
 
     const { email, username, password } = req.body
 
-    if (!username || email) {
+    if (!username && !email) {
         throw new ApiError(400, "username or email missing")
     }
 
@@ -131,8 +135,34 @@ const userLogin = asyncHandler(async (req, res) => {
         )
 })
 
+const logoutUser = asyncHandler(async(req, res) => {
+    await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $unset: {
+                refreshToken: 1
+            }
+        },
+        {
+            new: true
+        }
+    )
+
+    const options = {
+        httpOnly: true,
+        secure: true
+    }
+
+    return res
+    .status(200)
+    .clearCookie("accessToken", options)
+    .clearCookie("refreshToken", options)
+    .json(new ApiResponse(200, {}, "User logged Out"))
+})
+
 
 export {
     userRegister,
-    userLogin
+    userLogin,
+    logoutUser
 }

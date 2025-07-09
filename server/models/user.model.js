@@ -39,7 +39,7 @@ const UserSchema = new Schema({
 )
 
 UserSchema.pre("save",async function(next){
-    if(!this.isModified("Password")) return next()
+    if(!this.isModified("password")) return next()
 
     this.password=await bcrypt.hash(this.password,10)
     next()
@@ -65,6 +65,8 @@ UserSchema.methods.generateAccessToken = function(){
         }
     )
 }
+
+
 UserSchema.methods.generateRefreshToken = function(){
     return jwt.sign(
         {
