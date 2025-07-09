@@ -1,43 +1,74 @@
 import { model } from "mongoose"
 import { ApiError } from "../utils/apiError.js"
-import {asyncHandler} from "../utils/asyncHandler.js"
-import {User} from "../models/user.model.js"
+import { asyncHandler } from "../utils/asyncHandler.js"
+import { User } from "../models/user.model.js"
 
-const userRegister = asyncHandler((req,res)=>{
+
+const generateAccessAndRefereshTokens = async (userId) => {
+    try {
+        const user = await User.findById(userId)
+        const accessToken = user.generateAccessToken()
+        const refreshToken = user.generateRefreshToken()
+
+        user.refreshToken = refreshToken
+        await user.save({ validateBeforeSave: false })
+
+        return { accessToken, refreshToken }
+
+
+    } catch (error) {
+        throw new ApiError(500, "Something went wrong while generating referesh and access token")
+    }
+
+
+
+}
+
+const userRegister = asyncHandler(async (req, res) => {
     res.status(200).
-    json({
-        message:"ok"
-    })
+        json({
+            message: "ok"
+        })
 
-    const {username,email,password,fullName} = req.body
+    console.log(req.body)
+
+    const { username, email, password, fullName } = req.body
     console.log(email)
 
-    if(username === ""){
-        throw new ApiError(400,"Username required");
-    }
-    if(email === ""){
-        throw new ApiError(400,"Email required");
-    }
-    if(password === ""){
-        throw new ApiError(400,"Password required");
-    }
-    if(fullName === ""){
-        throw new ApiError(400,"FullName required");
+    // if(username === ""){
+    //     throw new ApiError(400,"Username required");
+    // }
+    // if(email === ""){
+    //     throw new ApiError(400,"Email required");
+    // }
+    // if(password === ""){
+    //     throw new ApiError(400,"Password required");
+    // }
+    // if(fullName === ""){
+    //     throw new ApiError(400,"FullName required");
+    // }
+
+    if (
+        [fullName, email, username, password].some(
+            (field) => typeof field !== "string" || field.trim() === ""
+        )
+    ) {
+        throw new ApiError(400, "All fields are required");
     }
 
-    const existingUser = User.findOne({
-        $or: [{username},{email}]
+    const existingUser = await User.findOne({
+        $or: [{ username }, { email }]
     })
-    
-    if(existingUser){
-        throw new ApiError(409,"Username or email already exists")
+
+    if (existingUser) {
+        throw new ApiError(409, "Username or email already exists")
     }
 
     const user = User.create({
         fullName,
         email,
         password,
-        username : username.toLowerCase()
+        username: username.toLowerCase()
     })
 
     const createdUser = User.findById(user._id).select(
@@ -54,5 +85,54 @@ const userRegister = asyncHandler((req,res)=>{
 })
 
 
+const userLogin = asyncHandler(async (req, res) => {
 
-export {userRegister}
+    const { email, username, password } = req.body
+
+    if (!username || email) {
+        throw new ApiError(400, "username or email missing")
+    }
+
+    const user = await User.findOne({
+        $or: [{ email }, { username }]
+    })
+
+    if (!user) {
+        throw new ApiError(404, "User doesnot exist")
+    }
+
+    const isPasswordValid = await user.isPasswordCorrect(password)
+
+    if (!isPasswordValid) {
+        throw new ApiError(401, "Invalid user credentials")
+    }
+
+    const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id)
+
+    const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
+
+    const options = {
+        httpOnly: true,
+        secure: true
+    }
+
+    return res
+        .status(200)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json(
+            new ApiResponse(
+                200,
+                {
+                    user: loggedInUser, accessToken, refreshToken
+                },
+                "User logged In Successfully"
+            )
+        )
+})
+
+
+export {
+    userRegister,
+    userLogin
+}
