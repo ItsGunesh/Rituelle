@@ -5,7 +5,7 @@ import './App.css'
 import Navigator from './Components/Navigator/Navigator'
 import TaskIndex from './Components/Main/Tasks/TaskIndex'
 import HabitsIndex from './Components/Main/HabitMap/HabitsIndex'
-import HabitContextProvider from './Context/HabitContextProvider'
+import {HabitContextProvider} from './Context/HabitContextProvider.jsx'
 
 
 function App() {

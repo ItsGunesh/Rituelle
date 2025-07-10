@@ -9,8 +9,7 @@ const HabitCard = ({ name, days }) => {
 
   const updateHabitStatus = () => {
     setIsComplete(!isComplete);
-    // Example: update global habits state if needed
-    // setHabits(prev => ...)
+    setHabits
   };
 
   return (
