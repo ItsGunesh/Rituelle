@@ -1,30 +1,30 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react';
+import { HabitContext } from '../../../Context/HabitContextProvider.jsx';
 
 const Cell = () => {
-  const habits = ["Wake Up", "Meditate", "Gym", "DSA", "Web Dev", "Diet", "Junk", "Social", "Skin Care", "Reading"]
-  const [completedHabits, setCompletedHabits] = useState(new Array(habits.length).fill(false))
+  const { habits, setHabits } = useContext(HabitContext);
 
   const toggleHabit = (index) => {
-    const newCompletedHabits = [...completedHabits]
-    newCompletedHabits[index] = !newCompletedHabits[index]
-    setCompletedHabits(newCompletedHabits)
-  }
+    setHabits(prevHabits =>
+      prevHabits.map((habit, i) =>
+        i === index ? { ...habit, isComplete: !habit.isComplete } : habit
+      )
+    );
+  };
 
   return (
     <div className='flex flex-col items-center gap-1 py-0.5'>
-      {habits.map((item, index) => {
-        return (
-          <div
-            key={index}
-            className={`w-3 h-3 rounded-sm cursor-pointer ${
-              completedHabits[index] ? 'bg-green-500' : 'bg-gray-400'
-            }`}
-            onClick={() => toggleHabit(index)}
-          ></div>
-        )
-      })}
+      {habits.map((habit, index) => (
+        <div
+          key={index}
+          className={`w-3 h-3 rounded-sm cursor-pointer ${
+            habit.isComplete ? 'bg-green-500' : 'bg-gray-400'
+          }`}
+          onClick={() => toggleHabit(index)}
+        ></div>
+      ))}
     </div>
-  )
-}
+  );
+};
 
-export default Cell
+export default Cell;
