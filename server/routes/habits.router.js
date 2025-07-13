@@ -1,9 +1,10 @@
 import { Router } from "express";
-import {habitUpdate,insertHabit} from "../controllers/habits.controller.js"
+import {updateHabits,insertHabit} from "../controllers/habits.controller.js"
 
 const router = Router()
 
+console.log("inside habitsController")
 router.route("/insertHabit").post(insertHabit)
-router.route("/habitUpdate").post(habitUpdate)
+router.route("/updateHabits").post(updateHabits)
 
 export default router
