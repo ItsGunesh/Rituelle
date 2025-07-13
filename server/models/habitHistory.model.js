@@ -9,10 +9,12 @@ const HabitsHistory = new Schema({
         required: true
     },
     completions:{
-        type:Map,
-        of:Boolean,
-        default:{}
+        type: Map,
+        of: Boolean,
+        default: new Map()
     }
+}, {
+    timestamps: true
 })
 
 export default HabitsHistory = mongoose.model("HabitHistory",HabitsHistory)

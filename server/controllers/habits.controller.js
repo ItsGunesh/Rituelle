@@ -34,7 +34,9 @@ const updateHabits = asyncHandler(async(req,res)=>{
         new ApiResponse(200, updatedHabits, "Habit added successfully")
     )
    } catch (error) {
-    new ApiError(401, error?.message || "Could not update Habits")
+    return res.status(401).json(
+        new ApiError(401, error?.message || "Could not update Habits")
+    )
    }
 })
 
