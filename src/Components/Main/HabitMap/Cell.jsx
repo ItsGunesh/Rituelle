@@ -20,7 +20,7 @@ const Cell = () => {
           className={`w-3 h-3 rounded-sm cursor-pointer ${
             habit.isComplete ? 'bg-green-500' : 'bg-gray-400'
           }`}
-          onClick={() => toggleHabit(index)}
+          // onClick={() => toggleHabit(index)}
         ></div>
       ))}
     </div>

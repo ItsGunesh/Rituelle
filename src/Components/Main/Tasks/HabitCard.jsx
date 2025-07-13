@@ -14,7 +14,6 @@ const HabitCard = ({ name, isComplete, habitIndex, updateHabitStatus }) => {
       </div>
       <div className='flex flex-col gap-0 py-1'>
         <p className='text-lg font-bold'>{name}</p>
-        {/* You can add more info here if needed */}
       </div>
     </div>
   );
