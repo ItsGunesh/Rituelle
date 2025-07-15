@@ -1,6 +1,18 @@
 import React from 'react'
 
 const SignUpPage = () => {
+
+    const handleSignUp = () =>{
+        axios.post('/api/register', {
+            
+        })
+        .then(response => {
+            console.log('Sign up successful:', response.data);
+        })
+        .catch(error =>{
+            console.error('There was an error signing up:', error);
+        })
+    }
     return (
         <>
             <div className='h-fit w-fit  bg-gray-100 shadow-xl border-gray-400 border-1 p-5 flex items-center flex-col'>
@@ -22,7 +34,7 @@ const SignUpPage = () => {
                     <input type="text" name="username" id="username" className='border-2 border-gray-400 items-center' />
                 </div>
                 <div className='py-2'>
-                    <button type="submit" className='border-2 border-gray-400 px-4 py-1 hover:bg-gray-700 hover:text-white'>Login</button>
+                    <button type="submit" onClick={handleSignUp}className='border-2 border-gray-400 px-4 py-1 hover:bg-gray-700 hover:text-white'>Login</button>
                 </div>
             </div>
 

@@ -19,11 +19,11 @@ app.use(cookieParser())
 
 import userRouter from "./routes/user.router.js"
 import router from "./routes/habits.router.js"
-import habitHistoryRouter from "./routes/habitHistory.router.js"
+// import habitHistoryRouter from "./routes/habitHistory.router.js"
 import { userRegister } from "./controllers/user.controller.js"
 
 app.use("/users",userRouter)
 app.use("/habits",router)
-app.use("/habitHistory",habitHistoryRouter)
+// app.use("/habitHistory",habitHistoryRouter)
 
 export {app}
