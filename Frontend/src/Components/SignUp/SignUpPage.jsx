@@ -1,42 +1,74 @@
-import React from 'react'
+import React , {useState} from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const SignUpPage = () => {
 
-    const handleSignUp = () =>{
-        axios.post('/api/register', {
-            
-        })
-        .then(response => {
-            console.log('Sign up successful:', response.data);
-        })
-        .catch(error =>{
-            console.error('There was an error signing up:', error);
-        })
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+        fullName: "",
+        username: ""
+    })
+
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        try {
+            const response = await axios.post('http://localhost:7000/api/users/signup', formData,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+
+            )
+
+            if (response.status === 201) {
+                console.log("User registered successfully:", response.data)
+                navigate('/api/')
+            }
+        } catch (error) {
+            console.log("Error during signup:", error)
+        }
     }
+
     return (
         <>
-            <div className='h-fit w-fit  bg-gray-100 shadow-xl border-gray-400 border-1 p-5 flex items-center flex-col'>
-                <h1 className='text-center p-4 text-xl font-bold'>SignUp</h1>
-                <div className='flex flex-col py-2'>
-                    <p className='text-left'>Enter your email</p>
-                    <input type="email" name="email" id="email" className='border-2 border-gray-400 items-center' />
+            <form onSubmit={handleSubmit}>
+                <div className='h-fit w-fit  bg-gray-100 shadow-xl border-gray-400 border-1 p-5 flex items-center flex-col'>
+                    <h1 className='text-center p-4 text-xl font-bold'>SignUp</h1>
+                    <div className='flex flex-col py-2'>
+                        <p className='text-left'>Enter your email</p>
+                        <input type="email" name="email" id="email" onChange={(e) => {
+                            setFormData({ ...formData, email: e.target.value })
+                        }} className='border-2 border-gray-400 items-center' />
+                    </div>
+                    <div className='flex flex-col py-2'>
+                        <p className='text-left'>Create your password</p>
+                        <input type="password" name="password" id="password" onChange={(e) => {
+                            setFormData({ ...formData, password: e.target.value })
+                        }} className='border-2 border-gray-400 items-center' />
+                    </div>
+                    <div className='flex flex-col py-2'>
+                        <p className='text-left'>Enter your Fullname</p>
+                        <input type="text" name="fullname" id="fullname" onChange={(e) => {
+                            setFormData({ ...formData, fullName: e.target.value })
+                        }} className='border-2 border-gray-400 items-center' />
+                    </div>
+                    <div className='flex flex-col py-2'>
+                        <p className='text-left'>Create your username</p>
+                        <input type="text" name="username" id="username" onChange={(e) => {
+                            setFormData({ ...formData, username: e.target.value })
+                        }} className='border-2 border-gray-400 items-center' />
+                    </div>
+                    <div className='py-2'>
+                        <button type="submit" className='border-2 border-gray-400 px-4 py-1 hover:bg-gray-700 hover:text-white'>SignUp</button>
+                    </div>
                 </div>
-                <div className='flex flex-col py-2'>
-                    <p className='text-left'>Create your password</p>
-                    <input type="password" name="password" id="password" className='border-2 border-gray-400 items-center' />
-                </div>
-                <div className='flex flex-col py-2'>
-                    <p className='text-left'>Enter your Fullname</p>
-                    <input type="text" name="fullname" id="fullname" className='border-2 border-gray-400 items-center' />
-                </div>
-                <div className='flex flex-col py-2'>
-                    <p className='text-left'>Create your username</p>
-                    <input type="text" name="username" id="username" className='border-2 border-gray-400 items-center' />
-                </div>
-                <div className='py-2'>
-                    <button type="submit" onClick={handleSignUp}className='border-2 border-gray-400 px-4 py-1 hover:bg-gray-700 hover:text-white'>Login</button>
-                </div>
-            </div>
+            </form>
 
         </>
     )

@@ -8,7 +8,7 @@ import { upload } from "../middleware/multer.middleware.js";
 const router = Router()
 
 // Use upload.none() to parse form-data with no files
-router.route("/register").post(upload.none(), userRegister)
+router.route("/signup").post(upload.none(), userRegister)
 router.route("/login").post(userLogin)
 
 // secured Routes

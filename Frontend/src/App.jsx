@@ -20,10 +20,10 @@ function App() {
       
       <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Dashboard/>} />
-            <Route path="/login" element={<LoginIndex/>} />
-            <Route path="/signup" element={<SignUpIndex/>} />
-            <Route path="/user" element={<HabitsIndex/>} />
+            <Route path="/api/" element={<Dashboard/>} />
+            <Route path="/api/login" element={<LoginIndex/>} />
+            <Route path="/api/signup" element={<SignUpIndex/>} />
+            <Route path="/api/user" element={<HabitsIndex/>} />
           </Routes>
         </BrowserRouter>
       <HabitsTodoIndex/>

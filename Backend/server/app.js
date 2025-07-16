@@ -4,10 +4,11 @@ import cors from "cors"
 
 const app = express()
 
-app.use(cors({
-    origin:process.env.CORS_ORIGIN,
-    credentials:true
-}))
+// app.use(cors({
+//     origin:process.env.CORS_ORIGIN,
+//     credentials:true
+// }))
+
 
 
 app.use(express.json());
@@ -22,8 +23,8 @@ import router from "./routes/habits.router.js"
 // import habitHistoryRouter from "./routes/habitHistory.router.js"
 import { userRegister } from "./controllers/user.controller.js"
 
-app.use("/users",userRouter)
-app.use("/habits",router)
+app.use("/api/users",userRouter)
+app.use("users/habits",router)
 // app.use("/habitHistory",habitHistoryRouter)
 
 export {app}
