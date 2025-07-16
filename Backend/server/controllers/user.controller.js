@@ -91,14 +91,14 @@ const userRegister = asyncHandler(async (req, res) => {
 
 const userLogin = asyncHandler(async (req, res) => {
 
-    const { email, username, password } = req.body
+    const { email, password } = req.body
 
-    if (!username && !email) {
+    if (!email) {
         throw new ApiError(400, "username or email missing")
     }
 
     const user = await User.findOne({
-        $or: [{ email }, { username }]
+        $or: [{ email }]
     })
 
     if (!user) {
@@ -113,7 +113,7 @@ const userLogin = asyncHandler(async (req, res) => {
 
     const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id)
 
-    const loggedInUser = await User.findById(user._id).select("-password -refreshToken").toObject()
+    const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
 
     const options = {
         httpOnly: true,

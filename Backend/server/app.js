@@ -9,6 +9,7 @@ const app = express()
 //     credentials:true
 // }))
 
+app.use(cors())
 
 
 app.use(express.json());

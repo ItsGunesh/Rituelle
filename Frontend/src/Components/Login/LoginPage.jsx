@@ -1,7 +1,37 @@
-import React, { UseState } from 'react'
+import axios from 'axios'
+import { set } from 'mongoose'
+import React, { useState, UseState } from 'react'
+import {useNavigate} from 'react-router-dom'
 
 const LoginPage = () => {
 
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
+    })
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        try {
+            const response = await axios.post('http://localhost:7000/api/users/login', formData, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+
+            if(response.status === 200) {
+                console.log("User logged in successfully:", response.data)
+                navigate('/api/')
+            }
+
+        } catch (error) {
+            console.log("Error during login:", error)
+        }
+
+    }
 
 
     return (
@@ -11,11 +41,11 @@ const LoginPage = () => {
                     <h1 className='text-center p-4 text-xl font-bold'>Login</h1>
                     <div className='flex flex-col py-2'>
                         <p className='text-left'>Enter your email</p>
-                        <input type="email" name="email" id="email" className='border-2 border-gray-400 items-center' />
+                        <input type="email" name="email" id="email" className='border-2 border-gray-400 items-center' onChange={(e) => { setFormData({ ...formData, email: e.target.value }) }} />
                     </div>
                     <div className='flex flex-col py-2'>
                         <p className='text-left'>Enter your password</p>
-                        <input type="password" name="password" id="password" className='border-2 border-gray-400 items-center' />
+                        <input type="password" name="password" id="password" className='border-2 border-gray-400 items-center' onChange={(e) => { setFormData({ ...formData, password: e.target.value }) }} />
                     </div>
                     <div className='py-2'>
                         <button type="submit" className='border-2 border-gray-400 px-4 py-1 hover:bg-gray-700 hover:text-white'>Login</button>
