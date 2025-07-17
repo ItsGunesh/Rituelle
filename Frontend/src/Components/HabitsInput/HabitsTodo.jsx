@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import axios from 'axios'
+import {useNavigate} from 'react-router-dom'
 
 const HabitsTodo = () => {
   const [input, setInput] = useState('');
   const [habits, setHabits] = useState([]);
   const [editIdx, setEditIdx] = useState(null);
   const [editValue, setEditValue] = useState('');
+
+  const navigate = useNavigate();
 
   const handleAdd = () => {
     if (!input.trim()) return;
@@ -32,8 +36,30 @@ const HabitsTodo = () => {
     }
   };
 
-  const handleSubmit = () => {
-    console.log('Final habits:', habits);
+  const handleSubmit = async () => {
+    // console.log('Final habits:', habits);
+
+    const userId = localStorage.getItem("userId");
+
+    try {
+        const response = await axios.post('http://localhost:7000/users/habits/insertHabit',{userId,habits},{
+          headers:{
+            "Content-Type": "application/json",
+          },
+          withCredentials: true
+        })
+
+        if(response.status===200){
+          console.log("Habits saved successfully!")
+
+          navigate("/api/")
+        }
+
+
+    } catch (error) {
+      
+    }
+
   };
 
   return (

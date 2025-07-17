@@ -52,18 +52,15 @@ const insertHabit = asyncHandler(async (req,res)=>{
     try {
         console.log("inside insert Habts")
     const {userId,habits} = req.body
-    
-    // Validate required fields
+
     if (!userId || !habits) {
         throw new ApiError(400, "userId and habits are required")
     }
-    
-    // Check if habits is an array
+
     if (!Array.isArray(habits)) {
         throw new ApiError(400, "habits must be an array")
     }
-    
-    // Check if user already has habits document
+
     const existingHabits = await Habits.findOne({ userId })
     
     if (existingHabits) {

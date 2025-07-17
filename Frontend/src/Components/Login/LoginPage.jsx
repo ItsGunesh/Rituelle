@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { set } from 'mongoose'
 import React, { useState, UseState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const LoginPage = () => {
 
@@ -20,12 +20,16 @@ const LoginPage = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
+                withCredentials: true
             })
 
-            if(response.status === 200) {
-                console.log("User logged in successfully:", response.data)
-                navigate('/api/')
+            if (response.status === 200) {
+                const userId = response.data.data.user._id;
+                localStorage.setItem("userId", userId);
+                navigate('/api/commitment');
             }
+
+            // console.log(response)
 
         } catch (error) {
             console.log("Error during login:", error)

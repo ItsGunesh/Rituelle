@@ -4,12 +4,12 @@ import cors from "cors"
 
 const app = express()
 
-// app.use(cors({
-//     origin:process.env.CORS_ORIGIN,
-//     credentials:true
-// }))
+app.use(cors({
+    origin:"http://localhost:5173", // get it from .env variables
+    credentials:true
+}))
 
-app.use(cors())
+// app.use(cors())
 
 
 app.use(express.json());
@@ -20,12 +20,12 @@ app.use(cookieParser())
 
 
 import userRouter from "./routes/user.router.js"
-import router from "./routes/habits.router.js"
+import habitsRouter from "./routes/habits.router.js"
 // import habitHistoryRouter from "./routes/habitHistory.router.js"
 import { userRegister } from "./controllers/user.controller.js"
 
 app.use("/api/users",userRouter)
-app.use("users/habits",router)
+app.use("/users/habits", habitsRouter);
 // app.use("/habitHistory",habitHistoryRouter)
 
 export {app}
