@@ -49,6 +49,8 @@ const HabitsTodo = () => {
           withCredentials: true
         })
 
+        console.log(response.status)
+
         if(response.status===200){
           console.log("Habits saved successfully!")
 
@@ -57,7 +59,7 @@ const HabitsTodo = () => {
 
 
     } catch (error) {
-      
+      console.log(error)
     }
 
   };

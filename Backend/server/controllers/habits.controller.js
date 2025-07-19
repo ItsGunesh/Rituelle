@@ -77,7 +77,7 @@ const insertHabit = asyncHandler(async (req, res) => {
                 habits:[...existingHabits.habits,...habits]
             })
 
-            return res.status(201).json(
+            return res.status(200).json(
             new ApiResponse(200,"Successfully")
         )
         }
@@ -86,9 +86,9 @@ const insertHabit = asyncHandler(async (req, res) => {
             userId,
             habits
         })
-        console.log("Outside newHabits")
+        // console.log("Outside newHabits")
 
-        return res.status(201).json(
+        return res.status(200).json(
             new ApiResponse(200, newHabits, "Habits inserted Successfully")
         )
     }
