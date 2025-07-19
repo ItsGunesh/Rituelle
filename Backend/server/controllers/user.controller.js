@@ -91,7 +91,8 @@ const userRegister = asyncHandler(async (req, res) => {
 
 const userLogin = asyncHandler(async (req, res) => {
 
-    const { email, password } = req.body
+    try {
+        const { email, password } = req.body
 
     if (!email) {
         throw new ApiError(400, "username or email missing")
@@ -134,6 +135,9 @@ const userLogin = asyncHandler(async (req, res) => {
                 "User logged In Successfully"
             )
         )
+    } catch (error) {
+        console.log("Error while logging in",error)
+    }
 })
 
 const logoutUser = asyncHandler(async(req, res) => {
