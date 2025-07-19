@@ -100,6 +100,26 @@ const insertHabit = asyncHandler(async (req, res) => {
     }
 })
 
+const getHabits=asyncHandler(async(req,res)=>{
+
+    try {
+        const userId = req.query.userId
+
+    const fetchedUser= await Habits.findOne({userId})
+    // console.log(fetchedUser.habits)
+    const fetchedHabits = fetchedUser.habits;
+
+    res.status(200).json(
+        new ApiResponse(200,fetchedHabits,"Habits fetched successfully")
+    )
+    } catch (error) {
+        throw new ApiError(400,"Unable to fetch habits",error)
+    }
 
 
-export { insertHabit, updateHabits }
+
+})
+
+
+
+export { insertHabit, updateHabits ,getHabits}
