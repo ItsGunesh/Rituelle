@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
-const HabitsHistory = new Schema({
-    UserId:{
+const habitsHistory = new Schema({
+    userId:{
         type:mongoose.Schema.Types.ObjectId
     },
     date: {
@@ -17,4 +17,4 @@ const HabitsHistory = new Schema({
     timestamps: true
 })
 
-export default HabitsHistory = mongoose.model("HabitHistory",HabitsHistory)
+export const HabitsHistory = mongoose.model("HabitsHistory",habitsHistory)

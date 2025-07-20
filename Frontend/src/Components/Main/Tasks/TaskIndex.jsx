@@ -7,6 +7,7 @@ import axios from 'axios'
 const TaskIndex = () => {
 
   const [habits, setHabits] = useState([])
+  const [completedHabits, setCompletedHabits] = useState([]);
 
   const userId = localStorage.getItem("userId");
 
@@ -17,7 +18,7 @@ const TaskIndex = () => {
           params: { userId },
           withCredentials: true
         });
-        console.log("Just before Response.status")
+        // console.log("Just before Response.status")
         if (response.status === 200) {
           console.log(response.data.data)
           setHabits(response.data.data);
@@ -36,6 +37,36 @@ const TaskIndex = () => {
       )
     );
   };
+  const toggleHabit = (habitName) => {
+    setCompletedHabits(prev =>
+      prev.includes(habitName)
+        ? prev.filter(h => h !== habitName)
+        : [...prev, habitName]
+    );
+  };
+  const updateDB = async () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const date = today.toISOString();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:7000/users/habits/updateDB",
+        { userId, date, completedHabits },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Updated DB");
+      }
+    } catch (error) {
+      console.log("Could not update DB", error);
+    }
+  };
 
   return (
     <>
@@ -46,13 +77,12 @@ const TaskIndex = () => {
           <HabitCard
             key={idx}
             name={habit}
-          // isComplete={habit.isComplete}
-          // habitIndex={idx}
-          // updateHabitStatus={updateHabitStatus}
+            isComplete={completedHabits.includes(habit)}
+            toggleHabit={() => toggleHabit(habit)}
           />
         ))}
         <div>
-          <button className='my-4 p-4 bg-gray-100 rounded-2xl shadow-xl border-gray-400 border-2 items-center'>Update</button>
+          <button onClick={updateDB} className='my-4 p-4 bg-gray-100 rounded-2xl shadow-xl border-gray-400 border-2 font-bold text-xl items-center'>Update</button>
         </div>
       </div>
 
