@@ -15,8 +15,10 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        const apiUrl = import.meta.env.VITE_BACKEND_URL
+
         try {
-            const response = await axios.post('http://localhost:7000/api/users/login', formData, {
+            const response = await axios.post(`${apiUrl}/api/users/login`, formData, {
                 headers: {
                     "Content-Type": "application/json",
                 },

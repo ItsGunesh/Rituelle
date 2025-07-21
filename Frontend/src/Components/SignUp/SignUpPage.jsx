@@ -12,12 +12,13 @@ const SignUpPage = () => {
     })
 
     const navigate = useNavigate();
+    const apiUrl = import.meta.env.VITE_BACKEND_URL
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         try {
-            const response = await axios.post('http://localhost:7000/api/users/signup', formData,
+            const response = await axios.post(`${apiUrl}/api/users/signup`, formData,
                 {
                     headers: {
                         "Content-Type": "application/json",

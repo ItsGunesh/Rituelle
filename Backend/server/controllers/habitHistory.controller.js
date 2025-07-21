@@ -1,7 +1,7 @@
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import {HabitsHistory} from "../models/habitHistory.model.js";
+import { HabitsHistory } from "../models/habitHistory.model.js";
 
 
 const updateDB = asyncHandler(async (req, res) => {
@@ -29,14 +29,14 @@ const updateDB = asyncHandler(async (req, res) => {
 
     const habitHistory = await HabitsHistory.findOneAndUpdate(
         { userId, date: targetDate },
-        { 
+        {
             userId,
             date: targetDate,
             completions: completionsMap
         },
-        { 
-            upsert: true, 
-            new: true 
+        {
+            upsert: true,
+            new: true
         }
     );
 
@@ -98,4 +98,24 @@ const getHabitHistoryByDate = asyncHandler(async (req, res) => {
     );
 });
 
-export { updateDB, getHabitHistory, getHabitHistoryByDate }; 
+const getHabitCompletions = asyncHandler(async (req, res) => {
+    const { userId } = req.query;
+    if (!userId) {
+        throw new ApiError(400, "userId is required");
+    }
+
+    try {
+        const habitHistory = await HabitsHistory.find({ userId })
+            .sort({ date: -1 })
+            .limit(20);
+
+        return res.status(200).json(
+            new ApiResponse(200, habitHistory, "Recent habit completions retrieved successfully"))
+    }
+    catch (error) {
+        console.log("Error fetching habitCompletions", error)
+    }
+
+});
+
+export { updateDB, getHabitHistory, getHabitHistoryByDate, getHabitCompletions }; 

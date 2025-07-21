@@ -5,13 +5,15 @@ import axios from 'axios'
 const Habits = () => {
   // const habits = ["Wake Up", "Meditate", "Gym", "DSA", "Web Dev", "Diet", "Junk", "Social", "Skin Care", "Reading"]
   const [habits,setHabits] = useState([])
+  const [recentCompletions, setRecentCompletions] = useState([]);
 
   const userId = localStorage.getItem("userId");
+  const apiUrl = import.meta.env.VITE_BACKEND_URL
 
   useEffect(() => {
     const fetchHabits = async () => {
       try {
-        const response = await axios.get("http://localhost:7000/users/habits/getHabits", {
+        const response = await axios.get(`${apiUrl}/users/habits/getHabits`, {
           params: { userId },
           withCredentials: true
         });
@@ -26,6 +28,23 @@ const Habits = () => {
     };
     fetchHabits();
   }, []);
+
+  useEffect(() => {
+    const fetchRecentCompletions = async () => {
+      const userId = localStorage.getItem("userId");
+      try {
+        const response = await axios.get(`${apiUrl}/users/habits/completions`, {
+          params: { userId }
+        });
+        if (response.status === 200) {
+          setRecentCompletions(response.data.data); // Array of {date, completions}
+        }
+      } catch (error) {
+        console.error("Error fetching recent completions:", error);
+      }
+    };
+    fetchRecentCompletions();
+  }, []);
   
   return (
     <>
@@ -36,70 +55,13 @@ const Habits = () => {
           ))}
         </div>
         <div className='flex gap-1'>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-          <Cell/>
-
+          {recentCompletions.map(entry => {
+            const dateStr = new Date(entry.date).toISOString().slice(0, 10);
+            const isCompleted = entry.completions && Object.keys(entry.completions).length > 0;
+            return (
+              <Cell key={dateStr} date={entry.date} isCompleted={isCompleted} />
+            );
+          })}
         </div>
       </div>
       <div className='flex justify-between text-sm font-bold pt-3 text-gray-600'>
