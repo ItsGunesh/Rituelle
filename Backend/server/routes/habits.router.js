@@ -10,6 +10,6 @@ router.route("/insertHabit").post(verifyJWT , insertHabit)
 router.route("/updateHabits").post(verifyJWT,updateHabits)
 router.route("/getHabits").get(getHabits)
 router.route("/updateDB").post(updateDB)
-router.route("completions").post(getHabitCompletions)
+router.route("/completions").get(getHabitCompletions)
 
 export default router

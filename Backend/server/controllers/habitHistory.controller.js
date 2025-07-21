@@ -2,6 +2,7 @@ import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { HabitsHistory } from "../models/habitHistory.model.js";
+import { Habits } from "../models/habits.model.js";
 
 
 const updateDB = asyncHandler(async (req, res) => {
@@ -17,22 +18,32 @@ const updateDB = asyncHandler(async (req, res) => {
         throw new ApiError(400, "completedHabits must be an array");
     }
 
+    const userHabitsDoc = await Habits.findOne({ userId });
+    if (!userHabitsDoc) {
+        throw new ApiError(404, "User habits not found");
+    }
+    const userHabits = userHabitsDoc.habits;
 
     const targetDate = new Date(date);
     targetDate.setHours(0, 0, 0, 0);
 
-    const completionsMap = new Map();
-    completedHabits.forEach(habit => {
-        completionsMap.set(habit, true);
-    });
+    let existingHistory = await HabitsHistory.findOne({ userId, date: targetDate });
 
+    let completionsArray;
+    if (existingHistory) {
+      completionsArray = userHabits.map((habit, idx) =>
+        completedHabits.includes(habit) ? true : (existingHistory.completions?.[idx] || false)
+      );
+    } else {
+      completionsArray = userHabits.map(habit => completedHabits.includes(habit));
+    }
 
     const habitHistory = await HabitsHistory.findOneAndUpdate(
         { userId, date: targetDate },
         {
             userId,
             date: targetDate,
-            completions: completionsMap
+            completions: completionsArray
         },
         {
             upsert: true,
