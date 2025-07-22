@@ -12,4 +12,5 @@ router.route("/getHabits").get(getHabits)
 router.route("/updateDB").post(updateDB)
 router.route("/completions").get(getHabitCompletions)
 
+
 export default router

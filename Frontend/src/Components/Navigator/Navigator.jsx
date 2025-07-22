@@ -1,9 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Navigator = () => {
 
+  const navigate = useNavigate()
+
   const [user, setUser] = useState()
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleAddHabit=()=>{
+      navigate("/api/commitment")
+  }
+
+  const handleSignOut=async ()=>{
+    const apiUrl = import.meta.env.VITE_BACKEND_URL
+    try {
+      const response = await axios.post(`${apiUrl}/api/users/logout`,{},{
+        headers:{
+          "Content-Type": "application/json",
+        },
+        withCredentials:true
+      })
+
+
+      if(response.status ===200){
+        console.log("User Logged out Successfully")
+        navigate("/api/login")
+      }
+    } catch (error) {
+      console.log("Error while signing out",error)
+    }
+  }
 
   useEffect(() => {
     const getUser = async () => {
@@ -23,8 +51,8 @@ const Navigator = () => {
           console.log("Error while fetching username", error)
         }
       }
-    };getUser()
-  },[])
+    }; getUser()
+  }, [])
   return (
     <>
       <div className='flex justify-between mb-3 shadow-md box-border w-full py-2 px-6 bg-gray-200'>
@@ -39,7 +67,21 @@ const Navigator = () => {
             <li>Diet</li> */}
             <li>{user}</li>
           </ul>
-          <div className='w-10 h-10 rounded-4xl bg-gray-600'></div>
+          <div className='relative'>
+            <div className='w-10 h-10 rounded-4xl bg-gray-600' onClick={() => setIsOpen(!isOpen)}></div>
+            {isOpen && (
+              <div className='absolute right-0 mt-2 w-40 bg-white border rounded shadow-md z-50'>
+                <ul className='text-sm'>
+                  <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer' onClick={handleAddHabit}>
+                    Add a habit
+                  </li>
+                  <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer' onClick={handleSignOut}>
+                    Logout
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>
