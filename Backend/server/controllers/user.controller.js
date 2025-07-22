@@ -166,6 +166,23 @@ const logoutUser = asyncHandler(async(req, res) => {
     .json(new ApiResponse(200, {}, "User logged Out"))
 })
 
+const getUser = asyncHandler(async(req,res)=>{
+    try {
+        const userId = req.query.userId
+        console.log(userId)
+
+        const user = await User.findById(`${userId}`)
+        console.log(user)
+        const username = user.username
+
+        res.status(200).json(
+            new ApiResponse(200,username,"Username fetched sucessfully")
+        )
+    } catch (error) {
+        console.log("Error while fetching username - Backend",error)
+    }
+})
+
 const refreshAccessToken = asyncHandler(async (req, res) => {
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
 
@@ -219,5 +236,6 @@ export {
     userRegister,
     userLogin,
     logoutUser,
-    refreshAccessToken
+    refreshAccessToken,
+    getUser
 }
