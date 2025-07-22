@@ -1,43 +1,53 @@
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import HabitsHistory from "../models/habitHistory.model.js";
+import { HabitsHistory } from "../models/habitHistory.model.js";
+import { Habits } from "../models/habits.model.js";
 
-// Complete habits for a specific date
-const completeHabits = asyncHandler(async (req, res) => {
+
+const updateDB = asyncHandler(async (req, res) => {
     const { userId, date, completedHabits } = req.body;
 
-    // Validate required fields
+
     if (!userId || !date || !completedHabits) {
         throw new ApiError(400, "userId, date, and completedHabits are required");
     }
 
-    // Validate completedHabits is an array
+
     if (!Array.isArray(completedHabits)) {
         throw new ApiError(400, "completedHabits must be an array");
     }
 
-    // Convert date string to Date object and normalize to start of day
+    const userHabitsDoc = await Habits.findOne({ userId });
+    if (!userHabitsDoc) {
+        throw new ApiError(404, "User habits not found");
+    }
+    const userHabits = userHabitsDoc.habits;
+
     const targetDate = new Date(date);
     targetDate.setHours(0, 0, 0, 0);
 
-    // Create a Map of completed habits
-    const completionsMap = new Map();
-    completedHabits.forEach(habit => {
-        completionsMap.set(habit, true);
-    });
+    let existingHistory = await HabitsHistory.findOne({ userId, date: targetDate });
 
-    // Upsert the habit history record
+    let completionsArray;
+    if (existingHistory) {
+      completionsArray = userHabits.map((habit, idx) =>
+        completedHabits.includes(habit) ? true : (existingHistory.completions?.[idx] || false)
+      );
+    } else {
+      completionsArray = userHabits.map(habit => completedHabits.includes(habit));
+    }
+
     const habitHistory = await HabitsHistory.findOneAndUpdate(
         { userId, date: targetDate },
-        { 
+        {
             userId,
             date: targetDate,
-            completions: completionsMap
+            completions: completionsArray
         },
-        { 
-            upsert: true, 
-            new: true 
+        {
+            upsert: true,
+            new: true
         }
     );
 
@@ -46,22 +56,22 @@ const completeHabits = asyncHandler(async (req, res) => {
     );
 });
 
-// Get habit history for a date range (for heatmap)
+
 const getHabitHistory = asyncHandler(async (req, res) => {
     const { userId, startDate, endDate } = req.query;
 
-    // Validate required fields
+
     if (!userId || !startDate || !endDate) {
         throw new ApiError(400, "userId, startDate, and endDate are required");
     }
 
-    // Convert date strings to Date objects
+
     const start = new Date(startDate);
     const end = new Date(endDate);
     start.setHours(0, 0, 0, 0);
     end.setHours(23, 59, 59, 999);
 
-    // Fetch habit history for the date range
+
     const habitHistory = await HabitsHistory.find({
         userId,
         date: { $gte: start, $lte: end }
@@ -72,20 +82,17 @@ const getHabitHistory = asyncHandler(async (req, res) => {
     );
 });
 
-// Get habit history for a specific date
+
 const getHabitHistoryByDate = asyncHandler(async (req, res) => {
     const { userId, date } = req.query;
 
-    // Validate required fields
     if (!userId || !date) {
         throw new ApiError(400, "userId and date are required");
     }
 
-    // Convert date string to Date object and normalize to start of day
     const targetDate = new Date(date);
     targetDate.setHours(0, 0, 0, 0);
 
-    // Fetch habit history for the specific date
     const habitHistory = await HabitsHistory.findOne({
         userId,
         date: targetDate
@@ -102,4 +109,24 @@ const getHabitHistoryByDate = asyncHandler(async (req, res) => {
     );
 });
 
-export { completeHabits, getHabitHistory, getHabitHistoryByDate }; 
+const getHabitCompletions = asyncHandler(async (req, res) => {
+    const { userId } = req.query;
+    if (!userId) {
+        throw new ApiError(400, "userId is required");
+    }
+
+    try {
+        const habitHistory = await HabitsHistory.find({ userId })
+            .sort({ date: -1 })
+            .limit(20);
+
+        return res.status(200).json(
+            new ApiResponse(200, habitHistory, "Recent habit completions retrieved successfully"))
+    }
+    catch (error) {
+        console.log("Error fetching habitCompletions", error)
+    }
+
+});
+
+export { updateDB, getHabitHistory, getHabitHistoryByDate, getHabitCompletions }; 
