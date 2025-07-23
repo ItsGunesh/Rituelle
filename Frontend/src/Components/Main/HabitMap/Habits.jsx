@@ -7,9 +7,13 @@ const Habits = () => {
   const [habits, setHabits] = useState([])
   const [recentCompletions, setRecentCompletions] = useState([]);
   const [totalActiveDays, setTotalActiveDays] = useState(0);
+  const [maxStreak,setMaxStreak] = useState(0)
+  const [streak,setStreak]=useState(0)
 
   const userId = localStorage.getItem("userId");
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
+  let longestStreak = 0, currentStreak = 0;
 
   useEffect(() => {
     const fetchHabits = async () => {
@@ -48,16 +52,39 @@ const Habits = () => {
   }, []);
 
   useEffect(() => {
-  if (!recentCompletions.length) return;
+    if (!recentCompletions.length) return;
 
-  const total = recentCompletions.filter(day =>
-    Array.isArray(day.completions) && day.completions.some(Boolean)
-  ).length;
+    const total = recentCompletions.filter(day =>
+      Array.isArray(day.completions) && day.completions.some(Boolean)
+    ).length;
 
-  setTotalActiveDays(total);
-}, [recentCompletions]);
+    setTotalActiveDays(total);
+    
+    let nowStreak = 0;
+    currentStreak = 0;
 
-  
+    recentCompletions.forEach(day =>  {
+      if (Array.isArray(day.completions) && day.completions.some(Boolean)) {
+        nowStreak += 1;
+        longestStreak = Math.max(longestStreak, nowStreak);
+      } else {
+        nowStreak = 0;
+      }
+    });
+
+    setMaxStreak(longestStreak)
+
+    for (let i = 0; i <recentCompletions.length; i++) {
+      if (Array.isArray(recentCompletions[i].completions) && recentCompletions[i].completions.some(Boolean)) currentStreak++;
+      else break;
+    }
+
+    setStreak(currentStreak)
+
+
+  }, [recentCompletions]);
+
+
 
   return (
     <>
@@ -82,8 +109,8 @@ const Habits = () => {
       </div>
       <div className='flex justify-between text-sm font-bold pt-3 text-gray-600'>
         <p>Active Days : {totalActiveDays}</p>
-        <p>Max Streak</p>
-        <p>Current Streak</p>
+        <p>Max Streak : {maxStreak}</p>
+        <p>Current Streak : {streak}</p>
       </div>
     </>
   )
