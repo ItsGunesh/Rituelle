@@ -39,34 +39,34 @@ const SignUpPage = () => {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <div className='h-fit w-fit  bg-gray-100 shadow-xl border-gray-400 border-1 p-5 flex items-center flex-col'>
-                    <h1 className='text-center p-4 text-xl font-bold'>SignUp</h1>
+                <div className='h-fit w-fit bg-gray-100 shadow-xl rounded-xl border-gray-400 border-1 px-10 py-5 flex items-center flex-col'>
+                    <h1 className='text-center p-4 text-4xl font-bold'>SignUp</h1>
                     <div className='flex flex-col py-2'>
-                        <p className='text-left'>Enter your email</p>
+                        <p className='text-left py-1'>Enter your email</p>
                         <input type="email" name="email" id="email" onChange={(e) => {
                             setFormData({ ...formData, email: e.target.value })
                         }} className='border-2 border-gray-400 items-center' />
                     </div>
                     <div className='flex flex-col py-2'>
-                        <p className='text-left'>Create your password</p>
+                        <p className='text-left py-1'>Create your password</p>
                         <input type="password" name="password" id="password" onChange={(e) => {
                             setFormData({ ...formData, password: e.target.value })
                         }} className='border-2 border-gray-400 items-center' />
                     </div>
                     <div className='flex flex-col py-2'>
-                        <p className='text-left'>Enter your Fullname</p>
+                        <p className='text-left py-1'>Enter your Fullname</p>
                         <input type="text" name="fullname" id="fullname" onChange={(e) => {
                             setFormData({ ...formData, fullName: e.target.value })
                         }} className='border-2 border-gray-400 items-center' />
                     </div>
                     <div className='flex flex-col py-2'>
-                        <p className='text-left'>Create your username</p>
+                        <p className='text-left py-1'>Create your username</p>
                         <input type="text" name="username" id="username" onChange={(e) => {
                             setFormData({ ...formData, username: e.target.value })
                         }} className='border-2 border-gray-400 items-center' />
                     </div>
                     <div className='py-2'>
-                        <button type="submit" className='border-2 border-gray-400 px-4 py-1 hover:bg-gray-700 hover:text-white'>SignUp</button>
+                        <button type="submit" className='border-2 rounded-lg border-gray-400 px-5 py-1 hover:bg-gray-700 hover:text-white'>SignUp</button>
                     </div>
                 </div>
             </form>

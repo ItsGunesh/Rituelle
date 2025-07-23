@@ -1,9 +1,34 @@
-import React from 'react'
+import React , {useState,useEffect}from 'react'
 import Habits from './Habits'
 import MaxMin from './MaxMin'
 import SideQuest from './SideQuest'
+import axios from 'axios'
 
 const HabitsIndex = () => {
+
+  const[habits,setHabits] = useState([])
+  const apiUrl = import.meta.env.VITE_BACKEND_URL
+
+  // useEffect(() => {
+  //   const fetchHabits = async () => {
+  //     try {
+  //       const response = await axios.get(`${apiUrl}/users/habits/getHabits`, {
+  //         params: { userId },
+  //         withCredentials: true
+  //       });
+  //       // console.log("Just before Response.status")
+  //       if (response.status === 200) {
+  //         console.log(response.data.data)
+  //         setHabits(response.data.data);
+  //       }
+  //     } catch (error) {
+  //       console.log("Error fetching habits:", error);
+  //     }
+  //   };
+  //   fetchHabits();
+  // }, []);
+  
+
   return (
     <>
       <div className='flex flex-col gap-4'>

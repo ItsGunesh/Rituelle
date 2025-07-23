@@ -65,8 +65,8 @@ const HabitsTodo = () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-4 bg-white rounded shadow">
-      <div className='text-center font-bold pb-5 text-2xl'>
+    <div className="w-full max-w-md mx-auto p-8 bg-white rounded-xl shadow">
+      <div className='text-center font-bold pb-5 text-4xl'>
         Add your commitments
       </div>
       <div className="flex gap-2 mb-4">

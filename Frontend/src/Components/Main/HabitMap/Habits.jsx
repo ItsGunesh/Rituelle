@@ -6,9 +6,10 @@ const Habits = () => {
   // const habits = ["Wake Up", "Meditate", "Gym", "DSA", "Web Dev", "Diet", "Junk", "Social", "Skin Care", "Reading"]
   const [habits, setHabits] = useState([])
   const [recentCompletions, setRecentCompletions] = useState([]);
+  const [totalActiveDays, setTotalActiveDays] = useState(0);
 
   const userId = localStorage.getItem("userId");
-  const apiUrl = import.meta.env.VITE_BACKEND_URL
+  const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchHabits = async () => {
@@ -46,6 +47,18 @@ const Habits = () => {
     fetchRecentCompletions();
   }, []);
 
+  useEffect(() => {
+  if (!recentCompletions.length) return;
+
+  const total = recentCompletions.filter(day =>
+    Array.isArray(day.completions) && day.completions.some(Boolean)
+  ).length;
+
+  setTotalActiveDays(total);
+}, [recentCompletions]);
+
+  
+
   return (
     <>
       <div className='p-4 border-2 rounded-2xl border-gray-400 flex gap-4 bg-white'>
@@ -60,7 +73,7 @@ const Habits = () => {
               {recentCompletions.map((entry, colIdx) => (
                 <div
                   key={entry.date}
-                  className={`w-3 h-3 rounded-sm cursor-pointer ${entry.completions && entry.completions[rowIdx] ? 'bg-green-500' : 'bg-gray-300'}`}
+                  className={`w-3 h-3 rounded-sm cursor-pointer  ${entry.completions && entry.completions[rowIdx] ? 'bg-gray-500 border-1 border-gray-500' : 'bg-gray-300 border-1 border-gray-300'}`}
                 ></div>
               ))}
             </div>
@@ -68,7 +81,7 @@ const Habits = () => {
         </div>
       </div>
       <div className='flex justify-between text-sm font-bold pt-3 text-gray-600'>
-        <p>Days Completed</p>
+        <p>Active Days : {totalActiveDays}</p>
         <p>Max Streak</p>
         <p>Current Streak</p>
       </div>

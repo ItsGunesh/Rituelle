@@ -70,12 +70,12 @@ const Navigator = () => {
           <div className='relative'>
             <div className='w-10 h-10 rounded-4xl bg-gray-600' onClick={() => setIsOpen(!isOpen)}></div>
             {isOpen && (
-              <div className='absolute right-0 mt-2 w-40 bg-white border rounded shadow-md z-50'>
+              <div className='absolute font-bold right-0 mt-2 p-2 w-40 bg-white border rounded-xl shadow-md z-50'>
                 <ul className='text-sm'>
-                  <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer' onClick={handleAddHabit}>
-                    Add a habit
+                  <li className='px-4 py-2 hover:bg-gray-100 rounded-xl cursor-pointer' onClick={handleAddHabit}>
+                    Add a new habit
                   </li>
-                  <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer' onClick={handleSignOut}>
+                  <li className='px-4 py-2 hover:bg-gray-100 rounded-xl cursor-pointer' onClick={handleSignOut}>
                     Logout
                   </li>
                 </ul>
