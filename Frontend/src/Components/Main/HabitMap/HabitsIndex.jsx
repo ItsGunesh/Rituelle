@@ -12,6 +12,8 @@ const HabitsIndex = () => {
   const [bestHabitIndex,setBestHabitIndex] = useState(0)
   const [worstHabitIndex,setWorstHabitIndex] = useState(0)
   const [recentCompletions, setRecentCompletions] = useState([]);
+  const [past7,setPast7]=useState(0)
+  const [past30,setPast30]=useState(0)
   const apiUrl = import.meta.env.VITE_BACKEND_URL
   const userId = localStorage.getItem("userId")
 
@@ -76,6 +78,10 @@ const HabitsIndex = () => {
     // console.log("BEST",bestHabitIndex)
     setWorstHabitIndex(habitCounts.indexOf(minCount))
     // console.log("worst",worstHabitIndex)
+
+
+    setPast7(recentCompletions.slice(-7).filter(day =>Array.isArray(day.completions) && day.completions.some(Boolean)).length)
+    setPast30(recentCompletions.slice(-30).filter(day =>Array.isArray(day.completions) && day.completions.some(Boolean)).length)
   }, [recentCompletions])
 
 
@@ -93,8 +99,8 @@ const HabitsIndex = () => {
         <SideQuest habit={"Side Quest"} type={"Learn Next.js"}/>
       </div> */}
         <div className='flex justify-between'>
-          <MaxMin habit={"Weekly Progress"} type={"5/7"} />
-          <MaxMin habit={"Monthly Progress"} type={"42/70"} />
+          <MaxMin habit={"Weekly Progress"} type={`${past7}/7`} />
+          <MaxMin habit={"Monthly Progress"} type={`${past30}/30`} />
           <MaxMin habit={habits[bestHabitIndex]} type={`Best kept habit : ${maxCount} Days`} />
           <MaxMin habit={habits[worstHabitIndex]} type={`Worst kept habit : ${minCount} Days`} />
         </div>
