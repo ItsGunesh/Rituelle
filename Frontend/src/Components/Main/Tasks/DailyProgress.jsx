@@ -1,12 +1,12 @@
 import React from 'react'
 
-const DailyProgress = () => {
+const DailyProgress = ({data}) => {
   return (
     <>
       <div>
-        <div className='flex justify-between px-4 rounded-xl'>
-            <p>Daily Progress</p>
-            <p>3/10</p>
+        <div className='flex flex-col items-center justify-between px-4 rounded-xl'>
+            <p className='font-bold'>Today's Progress</p>
+            <p className='font-bold'>{data} Habits</p>
         </div>
       </div>
     </>
