@@ -2,7 +2,7 @@ import React, { useContext , useState , useEffect } from 'react';
 import { HabitContext } from '../../../Context/HabitContextProvider.jsx';
 import axios from 'axios';
 
-// Accept isCompleted and date as props
+
 const Cell = ({ isCompleted, date }) => {
   // const { habits, setHabits } = useContext(HabitContext);
 
@@ -56,7 +56,7 @@ const Cell = ({ isCompleted, date }) => {
       {habits.map((habit, index) => (
         <div
           key={index}
-          className={`w-3 h-3 rounded-sm cursor-pointer ${
+          className={`w-3 h-3 rounded-sm cursor-pointer border-gray-700 border-1 ${
             habit.isComplete ? 'bg-green-500' : 'bg-gray-400'
           }`}
           // onClick={() => toggleHabit(index)}
