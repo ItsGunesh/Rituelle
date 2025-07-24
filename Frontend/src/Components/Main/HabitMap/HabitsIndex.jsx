@@ -88,7 +88,7 @@ const HabitsIndex = () => {
   return (
     <>
       <div className='flex flex-col gap-4'>
-        <div className='p-4 bg-gray-100 w-[75vw] h-fit border-1 rounded-2xl border-gray-400 shadow-xl '>
+        <div className='p-4 bg-gray-200 w-[75vw] h-fit border-2 rounded-2xl border-gray-600 shadow-xl '>
           <h3 className='font-bold text-2xl py-4'>Habits Heatmap</h3>
           <Habits />
         </div>
@@ -101,8 +101,8 @@ const HabitsIndex = () => {
         <div className='flex justify-between'>
           <MaxMin habit={"Weekly Progress"} type={`${past7}/7`} />
           <MaxMin habit={"Monthly Progress"} type={`${past30}/30`} />
-          <MaxMin habit={habits[bestHabitIndex]} type={`Best kept habit : ${maxCount} Days`} />
-          <MaxMin habit={habits[worstHabitIndex]} type={`Worst kept habit : ${minCount} Days`} />
+          <MaxMin habit={`Best kept habit`} type={`${habits[bestHabitIndex]} : ${maxCount} Days`} />
+          <MaxMin habit={`Worst kept habit`} type={` ${habits[worstHabitIndex]} : ${minCount} Days`} />
         </div>
 
       </div>

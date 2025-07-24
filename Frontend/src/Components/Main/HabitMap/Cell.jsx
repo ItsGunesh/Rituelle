@@ -57,7 +57,7 @@ const Cell = ({ isCompleted, date }) => {
         <div
           key={index}
           className={`w-3 h-3 rounded-sm cursor-pointer border-gray-700 border-1 ${
-            habit.isComplete ? 'bg-green-500' : 'bg-gray-400'
+            habit.isComplete ? 'bg-gray-500' : 'bg-gray-400'
           }`}
           // onClick={() => toggleHabit(index)}
         ></div>
