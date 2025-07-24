@@ -24,7 +24,7 @@ const HabitsIndex = () => {
         });
         // console.log("Just before Response.status")
         if (response.status === 200) {
-          console.log(response.data.data)
+          // console.log(response.data.data)
           setHabits(response.data.data);
         }
       } catch (error) {
@@ -43,7 +43,7 @@ const HabitsIndex = () => {
         });
         if (response.status === 200) {
           setRecentCompletions(response.data.data);
-          console.log(response.data.data)
+          // console.log(response.data.data)
         }
       } catch (error) {
         console.error("Error fetching recent completions:", error);

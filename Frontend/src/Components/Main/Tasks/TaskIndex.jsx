@@ -8,6 +8,8 @@ const TaskIndex = () => {
 
   const [habits, setHabits] = useState([])
   const [completedHabits, setCompletedHabits] = useState([]);
+  const [todaysHabits,setTodaysHabits] = useState([])
+  const [completedToday,setCompletedToday] = useState(0)
 
   const userId = localStorage.getItem("userId");
 
@@ -26,6 +28,7 @@ const TaskIndex = () => {
       console.log("Error fetching habits:", error);
     }
   };
+  // console.log(habits)
 
   useEffect(() => {
     fetchHabits();
@@ -70,16 +73,37 @@ const TaskIndex = () => {
     }
   };
 
+   useEffect(() => {
+    const fetchRecentCompletions = async () => {
+      const userId = localStorage.getItem("userId");
+      try {
+        const response = await axios.get(`${apiUrl}/users/habits/completions`, {
+          params: { userId }
+        });
+        if (response.status === 200) {
+          setTodaysHabits(response.data.data[0].completions);
+          setCompletedToday(response.data.data[0].completions.filter((val)=>val===true).length);
+        }
+      } catch (error) {
+        console.error("Error fetching recent completions:", error);
+      }
+    };
+    fetchRecentCompletions();
+  }, []);
+
+
+  console.log("Debug",todaysHabits)
+
   return (
     <>
       <div className='w-[20%]  flex flex-col py-2 px-4 rounded-2xl bg-gray-100 shadow-xl border-gray-400 border-1'>
-        <h3 className='font-bold text-xl px-4'>Todays Habits</h3>
-        <DailyProgress />
+        <h3 className='font-bold text-2xl px-4 text-center'>Todays Habits</h3>
+        <DailyProgress data={completedToday}/>
         {habits.map((habit, idx) => (
           <HabitCard
             key={idx}
             name={habit}
-            isComplete={completedHabits.includes(habit)}
+            isComplete={todaysHabits[idx]}
             toggleHabit={() => toggleHabit(habit)}
           />
         ))}
