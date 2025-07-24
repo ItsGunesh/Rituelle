@@ -52,6 +52,7 @@ const TaskIndex = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const date = today.toISOString();
+    
 
     try {
       const response = await axios.post(
@@ -96,7 +97,7 @@ const TaskIndex = () => {
 
   return (
     <>
-      <div className='w-[20%]  flex flex-col py-2 px-4 rounded-2xl bg-gray-100 shadow-xl border-gray-400 border-1'>
+      <div className='w-[20%]  flex flex-col py-2 px-4 rounded-2xl bg-gray-200 shadow-xl border-gray-600 border-2'>
         <h3 className='font-bold text-2xl px-4 text-center'>Todays Habits</h3>
         <DailyProgress data={completedToday}/>
         {habits.map((habit, idx) => (
@@ -108,7 +109,7 @@ const TaskIndex = () => {
           />
         ))}
         <div className='flex justify-center'>
-          <button onClick={updateDB} className='my-4 p-4 bg-gray-100 rounded-2xl shadow-xl border-gray-400 border-2 font-bold text-xl items-center'>Update</button>
+          <button onClick={updateDB} className='my-4 p-4 bg-gray-100 rounded-2xl shadow-xl border-gray-900 border-2 font-bold text-xl items-center hover:bg-gray-600 hover:text-white'>Update</button>
         </div>
       </div>
 

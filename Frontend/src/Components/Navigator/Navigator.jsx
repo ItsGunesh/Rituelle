@@ -55,7 +55,7 @@ const Navigator = () => {
   }, [])
   return (
     <>
-      <div className='flex justify-between mb-3 shadow-md box-border w-full py-2 px-6 bg-gray-200'>
+      <div className='flex justify-between shadow-md box-border w-full py-2 px-6 bg-gray-200'>
         <div>
           <p className='test-font text-4xl'>Rituelle</p>
           <p>{Date().toString}</p>

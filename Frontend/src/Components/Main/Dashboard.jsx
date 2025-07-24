@@ -9,7 +9,7 @@ const Dashboard = () => {
       <div className='sticky top-0 z-999'>
         <Navigator/>
       </div>
-      <div className='bg-gray-200 h-[100%] w-[100%] py-4 px-10 box-border flex gap-4'>
+      <div className='bg-gray-300 h-[100%] w-[100%] py-4 px-10 box-border flex gap-4'>
         <HabitsIndex/>
         <TaskIndex/>
       </div>
