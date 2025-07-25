@@ -1,22 +1,90 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Navigator = () => {
+
+  const navigate = useNavigate()
+
+  const [user, setUser] = useState()
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleAddHabit=()=>{
+      navigate("/api/commitment")
+  }
+
+  const handleSignOut=async ()=>{
+    const apiUrl = import.meta.env.VITE_BACKEND_URL
+    try {
+      const response = await axios.post(`${apiUrl}/api/users/logout`,{},{
+        headers:{
+          "Content-Type": "application/json",
+        },
+        withCredentials:true
+      })
+
+
+      if(response.status ===200){
+        localStorage.removeItem('userId')
+        console.log("User Logged out Successfully")
+        navigate("/api/login")
+      }
+    } catch (error) {
+      console.log("Error while signing out",error)
+    }
+  }
+
+  useEffect(() => {
+    const getUser = async () => {
+      const userId = localStorage.getItem("userId")
+      const apiUrl = import.meta.env.VITE_BACKEND_URL
+
+      if (userId) {
+        try {
+          const resposne = await axios.get(`${apiUrl}/api/users/getuser`, {
+            params: { userId }
+          })
+
+          if (resposne.status === 200) {
+            setUser(resposne.data.data)
+          }
+        } catch (error) {
+          console.log("Error while fetching username", error)
+        }
+      }
+    }; getUser()
+  }, [])
   return (
     <>
-        <div className='flex justify-between mb-3 shadow-md box-border w-full py-2 px-6 bg-gray-200'>
-            <div>
-                <p className='test-font text-4xl'>Rituelle</p>
-                <p>{Date().toString}</p>
-            </div>
-            <div className='flex items-center gap-20'>
-              <ul className='flex gap-5 font-bold'>
-                <li>Progress</li>
-                <li>Gym</li>
-                <li>Diet</li>
-              </ul>
-              <div className='w-10 h-10 rounded-4xl bg-gray-600'></div>
-            </div>
+      <div className='flex justify-between shadow-md box-border w-full py-2 px-6 bg-gray-200'>
+        <div>
+          <p className='test-font text-4xl'>Rituelle</p>
+          <p>{Date().toString}</p>
         </div>
+        <div className='flex items-center gap-20'>
+          <ul className='flex gap-5 font-bold'>
+            {/* <li>Progress</li>
+            <li>Gym</li>
+            <li>Diet</li> */}
+            <li>{user}</li>
+          </ul>
+          <div className='relative'>
+            <div className='w-10 h-10 rounded-4xl bg-gray-600' onClick={() => setIsOpen(!isOpen)}></div>
+            {isOpen && (
+              <div className='absolute font-bold right-0 mt-2 p-2 w-40 bg-white border rounded-xl shadow-md z-50'>
+                <ul className='text-sm'>
+                  <li className='px-4 py-2 hover:bg-gray-100 rounded-xl cursor-pointer' onClick={handleAddHabit}>
+                    Add a new habit
+                  </li>
+                  <li className='px-4 py-2 hover:bg-gray-100 rounded-xl cursor-pointer' onClick={handleSignOut}>
+                    Logout
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </>
   )
 }

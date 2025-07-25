@@ -9,9 +9,8 @@ const habitsHistory = new Schema({
         required: true
     },
     completions:{
-        type: Map,
-        of: Boolean,
-        default: new Map()
+        type: [Boolean],
+        default: []
     }
 }, {
     timestamps: true

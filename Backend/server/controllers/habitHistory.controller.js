@@ -1,7 +1,8 @@
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import {HabitsHistory} from "../models/habitHistory.model.js";
+import { HabitsHistory } from "../models/habitHistory.model.js";
+import { Habits } from "../models/habits.model.js";
 
 
 const updateDB = asyncHandler(async (req, res) => {
@@ -17,26 +18,36 @@ const updateDB = asyncHandler(async (req, res) => {
         throw new ApiError(400, "completedHabits must be an array");
     }
 
+    const userHabitsDoc = await Habits.findOne({ userId });
+    if (!userHabitsDoc) {
+        throw new ApiError(404, "User habits not found");
+    }
+    const userHabits = userHabitsDoc.habits;
 
     const targetDate = new Date(date);
     targetDate.setHours(0, 0, 0, 0);
 
-    const completionsMap = new Map();
-    completedHabits.forEach(habit => {
-        completionsMap.set(habit, true);
-    });
+    let existingHistory = await HabitsHistory.findOne({ userId, date: targetDate });
 
+    let completionsArray;
+    if (existingHistory) {
+      completionsArray = userHabits.map((habit, idx) =>
+        completedHabits.includes(habit) ? true : (existingHistory.completions?.[idx] || false)
+      );
+    } else {
+      completionsArray = userHabits.map(habit => completedHabits.includes(habit));
+    }
 
     const habitHistory = await HabitsHistory.findOneAndUpdate(
         { userId, date: targetDate },
-        { 
+        {
             userId,
             date: targetDate,
-            completions: completionsMap
+            completions: completionsArray
         },
-        { 
-            upsert: true, 
-            new: true 
+        {
+            upsert: true,
+            new: true
         }
     );
 
@@ -98,4 +109,24 @@ const getHabitHistoryByDate = asyncHandler(async (req, res) => {
     );
 });
 
-export { updateDB, getHabitHistory, getHabitHistoryByDate }; 
+const getHabitCompletions = asyncHandler(async (req, res) => {
+    const { userId } = req.query;
+    if (!userId) {
+        throw new ApiError(400, "userId is required");
+    }
+
+    try {
+        const habitHistory = await HabitsHistory.find({ userId })
+            .sort({ date: -1 })
+            .limit(20);
+
+        return res.status(200).json(
+            new ApiResponse(200, habitHistory, "Recent habit completions retrieved successfully"))
+    }
+    catch (error) {
+        console.log("Error fetching habitCompletions", error)
+    }
+
+});
+
+export { updateDB, getHabitHistory, getHabitHistoryByDate, getHabitCompletions }; 
