@@ -65,13 +65,13 @@ const HabitsTodo = () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-8 bg-white rounded-xl shadow">
+    <div className="w-full max-w-md mx-auto p-8 bg-gradient-to-r from-blue-50 via-blue-50 to-blue-50 rounded-xl shadow">
       <div className='text-center font-bold pb-5 text-4xl'>
         Add your commitments
       </div>
       <div className="flex gap-2 mb-4">
         <input
-          className="flex-1 border rounded px-2 py-1"
+          className="flex-1 bg-white border rounded px-2 py-1"
           type="text"
           placeholder="Add a habit..."
           value={input}
@@ -79,7 +79,7 @@ const HabitsTodo = () => {
           onKeyDown={e => e.key === 'Enter' && handleAdd()}
         />
         <button
-          className="bg-gray-200 text-black px-3 py-1 rounded hover:bg-gray-700 hover:text-white"
+          className="font-bold text-lg text-black px-4 py-1 rounded-md hover:transition-transform duration-100 hover:scale-110 hover:text-black"
           onClick={handleAdd}
         >
           Add Habit
@@ -91,14 +91,14 @@ const HabitsTodo = () => {
             {editIdx === idx ? (
               <>
                 <input
-                  className="border rounded px-2 py-1 flex-1"
+                  className="border font-bold rounded px-2 py-1 flex-1"
                   value={editValue}
                   onChange={e => setEditValue(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && handleUpdate(idx)}
                   autoFocus
                 />
                 <button
-                  className="bg-gray-200 text-black px-2 py-1 rounded hover:bg-gray-700 hover:text-white"
+                  className="font-bold text-lg text-black px-4 py-1 rounded-md hover:transition-transform duration-100 hover:scale-110 hover:text-black"
                   onClick={() => handleUpdate(idx)}
                 >
                   Update
@@ -108,13 +108,13 @@ const HabitsTodo = () => {
               <>
                 <span className="flex-1">{habit}</span>
                 <button
-                  className="bg-gray-200 text-black px-2 py-1 rounded hover:bg-gray-700 hover:text-white"
+                  className="font-bold text-lg text-black px-4 py-1 rounded-md hover:transition-transform duration-100 hover:scale-110 hover:text-black"
                   onClick={() => handleEdit(idx)}
                 >
                   Edit
                 </button>
                 <button
-                  className="bg-gray-200 text-black px-2 py-1 rounded hover:bg-gray-700 hover:text-white"
+                  className="font-bold text-lg text-black px-4 py-1 rounded-md hover:transition-transform duration-100 hover:scale-110 hover:text-black"
                   onClick={() => handleDelete(idx)}
                 >
                   Delete
@@ -125,7 +125,7 @@ const HabitsTodo = () => {
         ))}
       </ul>
       <button
-        className="w-full bg-gray-200 text-black py-2 rounded hover:bg-gray-700 hover:text-white"
+        className="w-full font-bold text-xl text-black px-4 py-1 rounded-md hover:transition-transform duration-100 hover:scale-110 hover:text-black "
         onClick={handleSubmit}
         disabled={habits.length === 0}
       >

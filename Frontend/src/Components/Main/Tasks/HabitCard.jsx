@@ -8,7 +8,7 @@ const HabitCard = ({ name, isComplete, toggleHabit }) => {
   const [toggle, setToggle] = useState(false)
   return (
     <div
-      className={`flex justify-left border-1 rounded-xl  items-center mt-4 bg-gray-100 border-gray-400 shadow-sm ${isComplete ? ' border-2 border-gray-900' : 'border-2 border-gray-900'} `}
+      className={`${isComplete?'bg-green-100':''} flex justify-left rounded-xl  items-center mt-4 border-gray-400 shadow-sm border-1 transition-transform duration-100 hover:scale-101 hover:shadow-md`}
       onClick={() => {
         toggleHabit();
         setToggle(prev => !prev);

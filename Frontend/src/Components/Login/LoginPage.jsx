@@ -43,18 +43,18 @@ const LoginPage = () => {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <div className='h-fit w-fit  bg-gray-100 shadow-xl border-gray-400 border-1 rounded-xl p-5 flex items-center flex-col'>
+                <div className='h-fit w-fit  bg-gradient-to-r from-blue-50 via-blue-50 to-blue-50 shadow-xl border-gray-400 border-1 rounded-xl p-5 flex items-center flex-col'>
                     <h1 className='text-center p-4 text-4xl font-bold'>Login</h1>
                     <div className='flex flex-col py-2'>
-                        <p className='text-left py-1'>Enter your email</p>
-                        <input type="email" name="email" id="email" className='border-2 border-gray-400 items-center' onChange={(e) => { setFormData({ ...formData, email: e.target.value }) }} />
+                        <p className='text-left py-1 font-bold '>Enter your email</p>
+                        <input type="email" name="email" id="email" className='border-2 bg-white border-gray-400 items-center' onChange={(e) => { setFormData({ ...formData, email: e.target.value }) }} />
                     </div>
                     <div className='flex flex-col py-2'>
-                        <p className='text-left py-1'>Enter your password</p>
-                        <input type="password" name="password" id="password" className='border-2 border-gray-400 items-center' onChange={(e) => { setFormData({ ...formData, password: e.target.value }) }} />
+                        <p className='text-left py-1 font-bold '>Enter your password</p>
+                        <input type="password" name="password" id="password" className='border-2 bg-white border-gray-400 items-center' onChange={(e) => { setFormData({ ...formData, password: e.target.value }) }} />
                     </div>
                     <div className='py-2'>
-                        <button type="submit" className='border-2 rounded-lg border-gray-400 px-4 py-1 hover:bg-gray-700 hover:text-white'>Login</button>
+                        <button type="submit" className='font-bold text-xl text-black px-4 py-1 rounded-md hover:transition-transform duration-100 hover:scale-110 hover:text-black'>Login</button>
                     </div>
                 </div>
             </form>

@@ -7,7 +7,7 @@ import Quote from '../Quote/Quote.jsx'
 const Dashboard = () => {
   return (
     <>
-      <div className='bg-gray-600 min-h-screen w-full'>
+      <div className='bg-gradient-to-br from-slate-100 to-slate-200 min-h-screen w-full'>
         <div className='sticky top-0 z-999'>
           <Navigator />
         </div>

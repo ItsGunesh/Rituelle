@@ -88,7 +88,7 @@ const Habits = () => {
 
   return (
     <>
-      <div className='p-4 border-2 rounded-2xl border-gray-600 flex gap-4 bg-gray-100'>
+      <div className='p-4 rounded-2xl flex gap-4 bg-gradient-to-r border border-gray-400 bg-slate-50'>
         <div className='text-xs font-bold w-fit flex flex-col gap-0'>
           {habits.map((item, ind) => (
             <p key={ind}>{item}</p>
@@ -100,15 +100,15 @@ const Habits = () => {
               {recentCompletions.map((entry, colIdx) => (
                 <div
                   key={entry.date}
-                  className={`w-3 h-3 rounded-sm cursor-pointer  ${entry.completions && entry.completions[rowIdx] ? 'bg-gray-600 border-1 border-gray-500' : 'bg-gray-300 border-1 border-gray-300'}`}
+                  className={`w-3 h-3 rounded-sm cursor-pointer  ${entry.completions && entry.completions[rowIdx] ? 'bg-gray-900 border-1 border-gray900' : 'bg-gray-300 border-1 border-gray-300'}`}
                 ></div>
               ))}
             </div>
           ))}
         </div>
       </div>
-      <div className='flex justify-around text-sm font-bold pt-3 text-gray-600'>
-        <p className='text-gray-800'>Active Days : {totalActiveDays}</p>
+      <div className='flex justify-around text-sm font-bold pt-3  text-gray-600'>
+        <p className='text-gray-800'>Total active Days : {totalActiveDays}</p>
         <p className='text-gray-800'>Max Streak : {maxStreak}</p>
         <p className='text-gray-800'>Current Streak : {streak}</p>
       </div>

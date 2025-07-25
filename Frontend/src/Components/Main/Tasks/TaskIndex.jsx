@@ -97,7 +97,7 @@ const TaskIndex = () => {
 
   return (
     <>
-      <div className='w-[20%] h-fit flex flex-col py-2 px-4 rounded-2xl bg-gray-200 shadow-xl border-gray-600 border-2'>
+      <div className='w-[20%] h-fit flex flex-col py-2 px-4 rounded-2xl bg-gradient-to-t from-blue-50 via-slate-100 to-blue-50 shadow-xl border-1 border-gray-300 '>
         <h3 className='font-bold text-2xl px-4 text-center'>Todays Habits</h3>
         <DailyProgress data={completedToday}/>
         {habits.map((habit, idx) => (
@@ -109,7 +109,7 @@ const TaskIndex = () => {
           />
         ))}
         <div className='flex justify-center'>
-          <button onClick={updateDB} className='my-4 p-4 bg-gray-100 rounded-2xl shadow-xl border-gray-900 border-2 font-bold text-xl items-center hover:bg-gray-600 hover:text-white'>Update</button>
+          <button onClick={updateDB} className='my-8 p-4 font-bold text-xl text-black px-4 py-1 rounded-md hover:transition-transform duration-100 hover:scale-110 hover:text-black'>Update</button>
         </div>
       </div>
 

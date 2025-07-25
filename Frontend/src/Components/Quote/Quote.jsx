@@ -6,7 +6,7 @@ const Quote = ({quote}) => {
 
   return (
     <>
-      <div className='bg-gray-100 border-2 p-4 border-gray-600 rounded-2xl w-[100%] shadow-lg'>
+      <div className='bg-gradient-to-r px-4 py-3 from-blue-50 via-blue-50 to-blue-50 border-1 border-gray-300  rounded-2xl w-[100%] shadow-lg'>
         <p className='font-bold text-center text-2xl'>{quote}</p>
       </div>
     </>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Navigator = () => {
 
@@ -56,7 +58,7 @@ const Navigator = () => {
   }, [])
   return (
     <>
-      <div className='flex justify-between shadow-md box-border w-full py-2 px-6 bg-gray-200'>
+      <div className='flex justify-between shadow-md box-border w-full py-2 px-6 bg-gradient-to-r from-slate-100 via-slate-100 to-slate-100'>
         <div>
           <p className='test-font text-4xl'>Rituelle</p>
           <p>{Date().toString}</p>
@@ -69,7 +71,7 @@ const Navigator = () => {
             <li>{user}</li>
           </ul>
           <div className='relative'>
-            <div className='w-10 h-10 rounded-4xl bg-gray-600' onClick={() => setIsOpen(!isOpen)}></div>
+            <div className='w-10 h-10 text-3xl hover:transition-transform duration-100 hover:scale-110 hover:text-black' onClick={() => setIsOpen(!isOpen)}><FontAwesomeIcon icon={faBars}/></div>
             {isOpen && (
               <div className='absolute font-bold right-0 mt-2 p-2 w-40 bg-white border rounded-xl shadow-md z-50'>
                 <ul className='text-sm'>
