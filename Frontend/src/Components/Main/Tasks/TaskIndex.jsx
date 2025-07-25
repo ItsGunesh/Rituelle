@@ -97,7 +97,7 @@ const TaskIndex = () => {
 
   return (
     <>
-      <div className='w-[20%]  flex flex-col py-2 px-4 rounded-2xl bg-gray-200 shadow-xl border-gray-600 border-2'>
+      <div className='w-[20%] h-fit flex flex-col py-2 px-4 rounded-2xl bg-gray-200 shadow-xl border-gray-600 border-2'>
         <h3 className='font-bold text-2xl px-4 text-center'>Todays Habits</h3>
         <DailyProgress data={completedToday}/>
         {habits.map((habit, idx) => (

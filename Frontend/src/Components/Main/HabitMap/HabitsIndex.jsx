@@ -3,6 +3,8 @@ import Habits from './Habits'
 import MaxMin from './MaxMin'
 import SideQuest from './SideQuest'
 import axios from 'axios'
+import Quote from '../../Quote/Quote'
+import Q from "../../Quote/quotes.json"
 
 const HabitsIndex = () => {
 
@@ -84,12 +86,19 @@ const HabitsIndex = () => {
     setPast30(recentCompletions.slice(-30).filter(day =>Array.isArray(day.completions) && day.completions.some(Boolean)).length)
   }, [recentCompletions])
 
+  const [newQuote,setnewQuote]=useState()
+
+  useEffect(()=>{
+    setnewQuote(Q[Math.floor(Math.random() * Q.length)].quote)
+    // console.log(Math.floor(Math.random() * Q.length))
+  },[])
+
 
   return (
     <>
       <div className='flex flex-col gap-4'>
-        <div className='p-4 bg-gray-200 w-[75vw] h-fit border-2 rounded-2xl border-gray-600 shadow-xl '>
-          <h3 className='font-bold text-2xl py-4'>Habits Heatmap</h3>
+        <div className='p-4 bg-gray-300 w-[75vw] h-fit border-2 rounded-2xl border-gray-900 shadow-xl '>
+          <h3 className='font-bold text-2xl py-4 '>Habits Heatmap</h3>
           <Habits />
         </div>
         {/* <div className='flex justify-between'>
@@ -103,6 +112,9 @@ const HabitsIndex = () => {
           <MaxMin habit={"Monthly Progress"} type={`${past30}/30`} />
           <MaxMin habit={`Best kept habit`} type={`${habits[bestHabitIndex]} : ${maxCount} Days`} />
           <MaxMin habit={`Worst kept habit`} type={` ${habits[worstHabitIndex]} : ${minCount} Days`} />
+        </div>
+        <div>
+          <Quote quote={newQuote}/>
         </div>
 
       </div>
