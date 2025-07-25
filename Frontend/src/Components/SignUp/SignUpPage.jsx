@@ -23,13 +23,16 @@ const SignUpPage = () => {
                     headers: {
                         "Content-Type": "application/json",
                     },
+                    withCredentials:true
                 }
 
             )
 
             if (response.status === 201) {
-                console.log("User registered successfully:", response.data)
-                navigate('/api/')
+                console.log("User registered and LoggedIn successfully:", response.data)
+                const userId = response.data.data.user._id;
+                localStorage.setItem("userId", userId);
+                navigate('/api/commitment')
             }
         } catch (error) {
             console.log("Error during signup:", error)
