@@ -5,7 +5,7 @@ import cors from "cors"
 const app = express()
 
 app.use(cors({
-    origin:"http://localhost:5173", // get it from .env variables
+    origin:"*", // get it from .env variables
     credentials:true
 }))
 
