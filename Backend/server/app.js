@@ -6,7 +6,7 @@ const app = express()
 
 app.use(cors({
     origin:"*", // get it from .env variables
-    credentials:true
+    credentials:false
 }))
 
 // app.use(cors())
