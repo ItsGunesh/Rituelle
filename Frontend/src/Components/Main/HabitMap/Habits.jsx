@@ -7,8 +7,8 @@ const Habits = () => {
   const [habits, setHabits] = useState([])
   const [recentCompletions, setRecentCompletions] = useState([]);
   const [totalActiveDays, setTotalActiveDays] = useState(0);
-  const [maxStreak,setMaxStreak] = useState(0)
-  const [streak,setStreak]=useState(0)
+  const [maxStreak, setMaxStreak] = useState(0)
+  const [streak, setStreak] = useState(0)
 
   const userId = localStorage.getItem("userId");
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
@@ -43,6 +43,7 @@ const Habits = () => {
         });
         if (response.status === 200) {
           setRecentCompletions(response.data.data);
+          // console.log(response.data.data);
         }
       } catch (error) {
         console.error("Error fetching recent completions:", error);
@@ -59,11 +60,11 @@ const Habits = () => {
     ).length;
 
     setTotalActiveDays(total);
-    
+
     let nowStreak = 0;
     currentStreak = 0;
 
-    recentCompletions.forEach(day =>  {
+    recentCompletions.forEach(day => {
       if (Array.isArray(day.completions) && day.completions.some(Boolean)) {
         nowStreak += 1;
         longestStreak = Math.max(longestStreak, nowStreak);
@@ -74,7 +75,7 @@ const Habits = () => {
 
     setMaxStreak(longestStreak)
 
-    for (let i = 0; i <recentCompletions.length; i++) {
+    for (let i = 0; i < recentCompletions.length; i++) {
       if (Array.isArray(recentCompletions[i].completions) && recentCompletions[i].completions.some(Boolean)) currentStreak++;
       else break;
     }
@@ -100,8 +101,12 @@ const Habits = () => {
               {recentCompletions.map((entry, colIdx) => (
                 <div
                   key={entry.date}
-                  className={`w-3 h-3 rounded-sm cursor-pointer  ${entry.completions && entry.completions[rowIdx] ? 'bg-gray-900 border-1 border-gray900' : 'bg-gray-300 border-1 border-gray-300'}`}
-                ></div>
+                  className={`w-3 h-3 rounded-sm cursor-pointer relative group  ${entry.completions && entry.completions[rowIdx] ? 'bg-gray-900 border-1 border-gray900' : 'bg-gray-300 border-1 border-gray-300'}`}
+                >
+                  <div className="absolute hidden group-hover:block bg-gray-900 text-white text-sm rounded px-2 py-1 bottom-full left-1/2 transform -translate-x-1/2 mb-2 whitespace-nowrap z-10">
+                    {entry.date.slice(0,10)}
+                  </div>
+                </div>
               ))}
             </div>
           ))}
