@@ -8,11 +8,12 @@ const Navigator = () => {
 
   const navigate = useNavigate()
 
+  const [isLoggedIn,setIsLoggedIn]=useState(false)
   const [user, setUser] = useState()
   const [isOpen, setIsOpen] = useState(false)
 
   const handleAddHabit=()=>{
-      navigate("/api/commitment")
+      navigate("/commitment")
   }
 
   const handleSignOut=async ()=>{
@@ -28,7 +29,8 @@ const Navigator = () => {
 
       if(response.status ===200){
         localStorage.removeItem('userId')
-        console.log("User Logged out Successfully")
+        // console.log("User Logged out Successfully")
+        alert("Logged Out Successfully")
         navigate("/login")
       }
     } catch (error) {
@@ -37,11 +39,13 @@ const Navigator = () => {
   }
 
   useEffect(() => {
+
     const getUser = async () => {
       const userId = localStorage.getItem("userId")
       const apiUrl = import.meta.env.VITE_BACKEND_URL
 
       if (userId) {
+        setIsLoggedIn(true)
         try {
           const resposne = await axios.get(`${apiUrl}/api/users/getuser`, {
             params: { userId }
@@ -70,7 +74,8 @@ const Navigator = () => {
             <li>Diet</li> */}
             <li>{user}</li>
           </ul>
-          <div className='relative'>
+          {isLoggedIn && (
+            <div className='relative'>
             <div className='w-10 h-10 text-3xl hover:transition-transform duration-100 hover:scale-110 hover:text-black' onClick={() => setIsOpen(!isOpen)}><FontAwesomeIcon icon={faBars}/></div>
             {isOpen && (
               <div className='absolute font-bold right-0 mt-2 p-2 w-40 bg-white border rounded-xl shadow-md z-50'>
@@ -85,6 +90,7 @@ const Navigator = () => {
               </div>
             )}
           </div>
+          )}
         </div>
       </div>
     </>
