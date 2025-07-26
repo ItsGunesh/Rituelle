@@ -29,7 +29,8 @@ const generateAccessAndRefereshTokens = async (userId) => {
 }
 
 const userRegister = asyncHandler(async (req, res) => {
-    // res.status(200).
+    try {
+        // res.status(200).
     //     json({
     //         message: "ok"
     //     })
@@ -65,7 +66,7 @@ const userRegister = asyncHandler(async (req, res) => {
     })
 
     if (existingUser) {
-        throw new ApiError(409, "Username or email already exists")
+        throw new ApiError(409, "User already exists")
     }
 
     const user = await User.create({
@@ -102,6 +103,12 @@ const userRegister = asyncHandler(async (req, res) => {
         "User registered and logged in successfully"
       )
     );
+    } catch (error) {
+        console.log("Error while Sign in due to",error.message)
+        res.status(400).json(
+                new ApiResponse(400,error.message)
+            )
+    }
 })
 
 

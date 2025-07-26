@@ -70,10 +70,11 @@ const LoginPage = () => {
                 </div>
             </form>
             <div>
-                <p className='text-center mt-4 text-lg font-bold'>{errorMessage}</p>
+                <p className='text-center mt-4 text-lg font-bold text-red-600'>{errorMessage}</p>
             </div>
-            <div>
-                <p className='text-sm my-4 text-center'>Dont have an account? <button className='font-bold' onClick={handleNavigate}>Signup</button></p>
+            <div className='flex flex-col'>
+                <p className='text-sm mt-4 text-center  '>Dont have an account? </p>
+                <button className='font-bold hover:transition-transform duration-100 hover:scale-110 hover:text-black' onClick={handleNavigate}>Signup</button>
             </div>
             </div>
 

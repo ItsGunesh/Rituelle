@@ -10,6 +10,7 @@ const SignUpPage = () => {
         fullName: "",
         username: ""
     })
+    const [errorMessage,setErrorMessage]=useState()
 
     const navigate = useNavigate();
     const apiUrl = import.meta.env.VITE_BACKEND_URL
@@ -35,13 +36,21 @@ const SignUpPage = () => {
                 navigate('/commitment')
             }
         } catch (error) {
-            console.log("Error during signup:", error)
+            // console.log("Error during signup:", error)
+            if(error.response.data.statusCode===400){
+                setErrorMessage(error.response.data.data)
+            }
         }
+    }
+
+    const handleNavigate=()=>{
+        navigate("/login")
     }
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <div className='flex flex-col'>
+                <form onSubmit={handleSubmit}>
                 <div className='h-fit w-fit bg-gradient-to-r from-blue-50 via-blue-50 to-blue-50 shadow-xl rounded-xl border-gray-400 border-1 px-10 py-5 flex items-center flex-col'>
                     <h1 className='text-center p-4 text-4xl font-bold'>SignUp</h1>
                     <div className='flex flex-col py-2'>
@@ -73,6 +82,14 @@ const SignUpPage = () => {
                     </div>
                 </div>
             </form>
+            <div>
+                <p className='text-center mt-4 text-lg font-bold text-red-600'>{errorMessage}</p>
+            </div>
+            <div className='flex flex-col'>
+                <p className='text-sm mt-4 text-center'>Already have an account? </p>
+                <button className='font-bold hover:transition-transform duration-100 hover:scale-110 hover:text-black' onClick={handleNavigate}>Login</button>
+            </div>
+            </div>
 
         </>
     )
