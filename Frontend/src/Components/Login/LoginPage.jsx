@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { set } from 'mongoose'
 import React, { useState, UseState } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const LoginPage = () => {
@@ -11,6 +12,7 @@ const LoginPage = () => {
         email: "",
         password: ""
     })
+    const [errorMessage,setErrorMessage]=useState()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -34,15 +36,24 @@ const LoginPage = () => {
             // console.log(response)
 
         } catch (error) {
-            console.log("Error during login:", error)
+            // console.log("Error during login:", error)
+            if(error.response.data.statusCode===400){
+                setErrorMessage(error.response.data.data)
+            }
+            // console.log("ERROR",errorMessage)
         }
+        
+    }
 
+    const handleNavigate=()=>{
+        navigate("/signup")
     }
 
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <div className='flex flex-col'>
+                <form onSubmit={handleSubmit}>
                 <div className='h-fit w-fit  bg-gradient-to-r from-blue-50 via-blue-50 to-blue-50 shadow-xl border-gray-400 border-1 rounded-xl p-5 flex items-center flex-col'>
                     <h1 className='text-center p-4 text-4xl font-bold'>Login</h1>
                     <div className='flex flex-col py-2'>
@@ -58,6 +69,13 @@ const LoginPage = () => {
                     </div>
                 </div>
             </form>
+            <div>
+                <p className='text-center mt-4 text-lg font-bold'>{errorMessage}</p>
+            </div>
+            <div>
+                <p className='text-sm my-4 text-center'>Dont have an account? <button className='font-bold' onClick={handleNavigate}>Signup</button></p>
+            </div>
+            </div>
 
         </>
     )

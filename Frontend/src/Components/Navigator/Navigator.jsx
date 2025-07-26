@@ -29,7 +29,7 @@ const Navigator = () => {
       if(response.status ===200){
         localStorage.removeItem('userId')
         console.log("User Logged out Successfully")
-        navigate("/api/login")
+        navigate("/login")
       }
     } catch (error) {
       console.log("Error while signing out",error)

@@ -111,7 +111,11 @@ const userLogin = asyncHandler(async (req, res) => {
         const { email, password } = req.body
 
     if (!email) {
-        throw new ApiError(400, "username or email missing")
+        throw new ApiError(400, "Email is missing")
+    }
+
+    if (!password) {
+        throw new ApiError(400, "Password is missing")
     }
 
     const user = await User.findOne({
@@ -152,7 +156,10 @@ const userLogin = asyncHandler(async (req, res) => {
             )
         )
     } catch (error) {
-        console.log("Error while logging in",error)
+        console.log("Error while logging in due to",error.message)
+        res.status(400).json(
+                new ApiResponse(400,error.message)
+            )
     }
 })
 

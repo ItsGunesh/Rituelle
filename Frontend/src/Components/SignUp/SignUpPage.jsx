@@ -32,7 +32,7 @@ const SignUpPage = () => {
                 console.log("User registered and LoggedIn successfully:", response.data)
                 const userId = response.data.data.user._id;
                 localStorage.setItem("userId", userId);
-                navigate('/api/commitment')
+                navigate('/commitment')
             }
         } catch (error) {
             console.log("Error during signup:", error)
