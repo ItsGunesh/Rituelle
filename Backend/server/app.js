@@ -1,12 +1,17 @@
 import express from "express"
 import cookieParser from "cookie-parser"
 import cors from "cors"
+import dotenv from "dotenv"
+
+dotenv.config({
+    path: './.env'
+})
 
 const app = express()
 
 app.use(cors({
-    origin:"*", // get it from .env variables
-    credentials:false
+    origin:process.env.CORS_ORIGIN, // get it from .env variables
+    credentials:true
 }))
 
 // app.use(cors())

@@ -93,7 +93,7 @@ const TaskIndex = () => {
   }, []);
 
 
-  console.log("Debug",todaysHabits)
+  // console.log("Debug",todaysHabits)
 
   return (
     <>
