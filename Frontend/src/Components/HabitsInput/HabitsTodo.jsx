@@ -40,9 +40,10 @@ const HabitsTodo = () => {
     // console.log('Final habits:', habits);
 
     const userId = localStorage.getItem("userId");
+    const apiUrl = import.meta.env.VITE_BACKEND_URL
 
     try {
-        const response = await axios.post('http://localhost:7000/users/habits/insertHabit',{userId,habits},{
+        const response = await axios.post(`${apiUrl}/users/habits/insertHabit`,{userId,habits},{
           headers:{
             "Content-Type": "application/json",
           },

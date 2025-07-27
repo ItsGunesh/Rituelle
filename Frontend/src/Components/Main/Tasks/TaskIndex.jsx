@@ -59,7 +59,7 @@ const TaskIndex = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:7000/users/habits/updateDB",
+        `${apiUrl}/users/habits/updateDB`,
         { userId, date, completedHabits },
         {
           headers: {
