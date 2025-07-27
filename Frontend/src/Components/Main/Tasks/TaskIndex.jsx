@@ -122,8 +122,8 @@ const TaskIndex = () => {
         }
 
         setRecentCompletions(lastDays);
-        setCompletedHabits(recentCompletions[59].completions)
-        setTodaysHabits(recentCompletions[59].completions)
+        setCompletedHabits(lastDays[59].completions)
+        setTodaysHabits(lastDays[59].completions)
         setCompletedToday(lastDays[59].completions.filter((val)=>val===true).length)
       }
     } catch (error) {
