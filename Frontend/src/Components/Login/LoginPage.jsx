@@ -30,7 +30,7 @@ const LoginPage = () => {
             if (response.status === 200) {
                 const userId = response.data.data.user._id;
                 localStorage.setItem("userId", userId);
-                navigate('/');
+                navigate('/dashboard');
             }
 
             // console.log(response)

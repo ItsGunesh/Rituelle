@@ -54,7 +54,7 @@ const HabitsTodo = () => {
         if(response.status===200){
           console.log("Habits saved successfully!")
 
-          navigate("/")
+          navigate("/dashboard")
         }
 
 

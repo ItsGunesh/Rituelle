@@ -21,7 +21,8 @@ function App() {
 
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<LoginIndex />} />
             <Route path="/login" element={<LoginIndex />} />
             <Route path="/signup" element={<SignUpIndex />} />
             <Route path="/commitment" element={<HabitsTodoIndex />} />
