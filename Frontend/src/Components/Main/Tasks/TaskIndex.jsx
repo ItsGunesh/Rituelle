@@ -13,7 +13,8 @@ const TaskIndex = () => {
   const [completedToday,setCompletedToday] = useState(0)
   const [recentCompletions,setRecentCompletions]=useState([])
 
-  const userId = localStorage.getItem("userId");
+  const userId = sessionStorage.getItem("userId");
+  // const userId = localStorage.getItem("userId");
 
   const apiUrl = import.meta.env.VITE_BACKEND_URL
 

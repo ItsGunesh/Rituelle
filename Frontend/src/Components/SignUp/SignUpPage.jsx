@@ -32,7 +32,8 @@ const SignUpPage = () => {
             if (response.status === 201) {
                 console.log("User registered and LoggedIn successfully:", response.data)
                 const userId = response.data.data.user._id;
-                localStorage.setItem("userId", userId);
+                sessionStorage.setItem("userId", userId);
+                // localStorage.setItem("userId", userId);
                 navigate('/commitment')
             }
         } catch (error) {

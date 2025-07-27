@@ -28,7 +28,8 @@ const Navigator = () => {
 
 
       if(response.status ===200){
-        localStorage.removeItem('userId')
+        sessionStorage.removeItem('userId')
+        // localStorage.removeItem('userId')
         // console.log("User Logged out Successfully")
         alert("Logged Out Successfully")
         navigate("/login")
@@ -41,7 +42,8 @@ const Navigator = () => {
   useEffect(() => {
 
     const getUser = async () => {
-      const userId = localStorage.getItem("userId")
+      const userId = sessionStorage.getItem("userId")
+      // const userId = localStorage.getItem("userId")
       const apiUrl = import.meta.env.VITE_BACKEND_URL
 
       if (userId) {

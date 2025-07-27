@@ -17,7 +17,8 @@ const HabitsIndex = () => {
   const [past7,setPast7]=useState(0)
   const [past30,setPast30]=useState(0)
   const apiUrl = import.meta.env.VITE_BACKEND_URL
-  const userId = localStorage.getItem("userId")
+  const userId = sessionStorage.getItem("userId")
+  // const userId = localStorage.getItem("userId")
 
   useEffect(() => {
     const fetchHabits = async () => {
@@ -40,7 +41,8 @@ const HabitsIndex = () => {
 
   useEffect(() => {
     const fetchRecentCompletions = async () => {
-      const userId = localStorage.getItem("userId");
+      const userId = sessionStorage.getItem("userId");
+      // const userId = localStorage.getItem("userId");
       try {
         const response = await axios.get(`${apiUrl}/users/habits/completions`, {
           params: { userId }

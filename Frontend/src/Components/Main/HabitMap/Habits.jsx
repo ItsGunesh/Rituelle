@@ -13,7 +13,8 @@ const Habits = () => {
   const [streak, setStreak] = useState(0)
   const [daysToRender, setDaysToRender] = useState([]);
 
-  const userId = localStorage.getItem("userId");
+  const userId = sessionStorage.getItem("userId");
+  // const userId = localStorage.getItem("userId");
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
   let longestStreak = 0, currentStreak = 0;
