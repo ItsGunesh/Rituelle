@@ -9,13 +9,13 @@ import Q from "../../Quote/quotes.json"
 const HabitsIndex = () => {
 
   const [habits, setHabits] = useState([])
-  const [maxCount,setMaxCount] = useState(0)
-  const [minCount,setMinCount] = useState(0)
-  const [bestHabitIndex,setBestHabitIndex] = useState(0)
-  const [worstHabitIndex,setWorstHabitIndex] = useState(0)
+  const [maxCount, setMaxCount] = useState(0)
+  const [minCount, setMinCount] = useState(0)
+  const [bestHabitIndex, setBestHabitIndex] = useState(0)
+  const [worstHabitIndex, setWorstHabitIndex] = useState(0)
   const [recentCompletions, setRecentCompletions] = useState([]);
-  const [past7,setPast7]=useState(0)
-  const [past30,setPast30]=useState(0)
+  const [past7, setPast7] = useState(0)
+  const [past30, setPast30] = useState(0)
   const apiUrl = import.meta.env.VITE_BACKEND_URL
   const userId = sessionStorage.getItem("userId")
   // const userId = localStorage.getItem("userId")
@@ -69,31 +69,34 @@ const HabitsIndex = () => {
     const habitCounts = new Array(recentCompletions[0].completions.length).fill(0);
 
     recentCompletions.forEach(day => {
-      if(Array.isArray(day.completions) && day.completions.some(Boolean)){
+      if (Array.isArray(day.completions) && day.completions.some(Boolean)) {
         day.completions.forEach((completed, idx) => {
-        if (completed) habitCounts[idx]++;
-      });
+          if (completed) habitCounts[idx]++;
+        });
       }
-      
+
     });
-    setMaxCount(Math.max(...habitCounts))
-    setMinCount(Math.min(...habitCounts))
-    setBestHabitIndex(habitCounts.indexOf(maxCount))
+    const max = Math.max(...habitCounts);
+    const min = Math.min(...habitCounts);
+
+    setMaxCount(max);
+    setMinCount(min);
+    setBestHabitIndex(habitCounts.indexOf(max));
+    setWorstHabitIndex(habitCounts.indexOf(min));
     // console.log("BEST",bestHabitIndex)
-    setWorstHabitIndex(habitCounts.indexOf(minCount))
     // console.log("worst",worstHabitIndex)
 
 
-    setPast7(recentCompletions.slice(-7).filter(day =>Array.isArray(day.completions) && day.completions.some(Boolean)).length)
-    setPast30(recentCompletions.slice(-30).filter(day =>Array.isArray(day.completions) && day.completions.some(Boolean)).length)
+    setPast7(recentCompletions.slice(-7).filter(day => Array.isArray(day.completions) && day.completions.some(Boolean)).length)
+    setPast30(recentCompletions.slice(-30).filter(day => Array.isArray(day.completions) && day.completions.some(Boolean)).length)
   }, [recentCompletions])
 
-  const [newQuote,setnewQuote]=useState()
+  const [newQuote, setnewQuote] = useState()
 
-  useEffect(()=>{
+  useEffect(() => {
     setnewQuote(Q[Math.floor(Math.random() * Q.length)].quote)
     // console.log(Math.floor(Math.random() * Q.length))
-  },[])
+  }, [])
 
 
   return (
@@ -110,13 +113,13 @@ const HabitsIndex = () => {
         <SideQuest habit={"Side Quest"} type={"Learn Next.js"}/>
       </div> */}
         <div className='flex justify-between '>
-          <MaxMin habit={"Weekly Progress"} type={`${past7}/7`} css={`bg-gradient-to-br from-purple-50 to-pink-100 border-purple-200 border-1 `}/>
-          <MaxMin habit={"Monthly Progress"} type={`${past30}/30`} css={`bg-gradient-to-br from-purple-50 to-pink-100 border-purple-200 border-1 `}/>
-          <MaxMin habit={`Best kept habit`} type={`${habits[bestHabitIndex]} for ${maxCount} Days`} css={`bg-gradient-to-br from-yellow-50 to-amber-100 border-amber-200 border-1 `}/>
+          <MaxMin habit={"Weekly Progress"} type={`${past7}/7`} css={`bg-gradient-to-br from-purple-50 to-pink-100 border-purple-200 border-1 `} />
+          <MaxMin habit={"Monthly Progress"} type={`${past30}/30`} css={`bg-gradient-to-br from-purple-50 to-pink-100 border-purple-200 border-1 `} />
+          <MaxMin habit={`Best kept habit`} type={`${habits[bestHabitIndex]} for ${maxCount} Days`} css={`bg-gradient-to-br from-yellow-50 to-amber-100 border-amber-200 border-1 `} />
           <MaxMin habit={`Worst kept habit`} type={` ${habits[worstHabitIndex]} for ${minCount} Days`} css={`bg-gradient-to-br from-orange-50 to-red-100 border-orange-200 border-1 `} />
         </div>
         <div>
-          <Quote quote={newQuote}/>
+          <Quote quote={newQuote} />
         </div>
 
       </div>
