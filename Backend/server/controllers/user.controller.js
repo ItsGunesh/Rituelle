@@ -88,7 +88,7 @@ const userRegister = asyncHandler(async (req, res) => {
 
     const options = {
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: 'lax'
   };
 
@@ -145,7 +145,7 @@ const userLogin = asyncHandler(async (req, res) => {
 
     const options = {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: 'lax' //study this
     }
 
@@ -171,7 +171,8 @@ const userLogin = asyncHandler(async (req, res) => {
 })
 
 const logoutUser = asyncHandler(async(req, res) => {
-    await User.findByIdAndUpdate(
+    try {
+        await User.findByIdAndUpdate(
         req.user._id,
         {
             $unset: {
@@ -185,7 +186,7 @@ const logoutUser = asyncHandler(async(req, res) => {
 
     const options = {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite:'lax'
     }
 
@@ -194,6 +195,11 @@ const logoutUser = asyncHandler(async(req, res) => {
     .clearCookie("accessToken", options)
     .clearCookie("refreshToken", options)
     .json(new ApiResponse(200, {}, "User logged Out"))
+    } catch (error) {
+        res.send(501).json(
+            new ApiResponse(500,"Error while signout")
+        )
+    }
 })
 
 const getUser = asyncHandler(async(req,res)=>{
