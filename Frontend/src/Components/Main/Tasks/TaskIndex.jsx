@@ -130,7 +130,7 @@ const TaskIndex = () => {
     }
   };
   fetchRecentCompletions();
-},[habits]);
+},[]);
 
 
   // console.log("Debug",todaysHabits)
