@@ -12,6 +12,7 @@ const TaskIndex = () => {
   const [todaysHabits,setTodaysHabits] = useState([])
   const [completedToday,setCompletedToday] = useState(0)
   const [recentCompletions,setRecentCompletions]=useState([])
+  const[toggle,setToggle]=useState(false)
 
   const userId = sessionStorage.getItem("userId");
   // const userId = localStorage.getItem("userId");
@@ -74,6 +75,7 @@ const TaskIndex = () => {
         console.log("Updated DB");
         fetchRecentCompletions();
         window.location.reload(); // Reload the whole page after update
+        setToggle(!toggle)
       }
     } catch (error) {
       console.log("Could not update DB", error);
@@ -131,7 +133,7 @@ const TaskIndex = () => {
 
  useEffect(() => {
   fetchRecentCompletions();
-},[habits]);
+},[habits,toggle]);
 
 
   // console.log("Debug",todaysHabits)
