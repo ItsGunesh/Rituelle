@@ -98,7 +98,6 @@ const TaskIndex = () => {
   //   fetchRecentCompletions();
   // }, []);
 
- useEffect(() => {
   const fetchRecentCompletions = async () => {
     try {
       const response = await axios.get(`${apiUrl}/users/habits/completions`, {
@@ -129,8 +128,10 @@ const TaskIndex = () => {
       console.error("Error fetching recent completions:", error);
     }
   };
+
+ useEffect(() => {
   fetchRecentCompletions();
-},[habits,completedHabits,completedToday,recentCompletions,todaysHabits]);
+},[habits]);
 
 
   // console.log("Debug",todaysHabits)
