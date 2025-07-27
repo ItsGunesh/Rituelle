@@ -95,23 +95,39 @@ const TaskIndex = () => {
   //   fetchRecentCompletions();
   // }, []);
 
-   useEffect(() => {
-    const fetchRecentCompletions = async () => {
-      const userId = localStorage.getItem("userId");
-      try {
-        const response = await axios.get(`${apiUrl}/users/habits/completions`, {
-          params: { userId }
+ useEffect(() => {
+  const fetchRecentCompletions = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/users/habits/completions`, {
+        params: { userId }
+      });
+      if (response.status === 200) {
+        const completedData = response.data.data;
+        const dateMap = new Map();
+        completedData.forEach(entry => {
+          dateMap.set(entry.date.slice(0, 10), entry);
         });
-        if (response.status === 200) {
-          setTodaysHabits(response.data.data[0].completions);
-          setCompletedToday(response.data.data[0].completions.filter((val)=>val===true).length);
+
+        const lastDays = [];
+        for (let i = 59; i >=0; i--) {
+          const dateStr = format(subDays(new Date(), i), 'yyyy-MM-dd');
+          lastDays.push({
+            date: dateStr,
+            completions: dateMap.has(dateStr) ? dateMap.get(dateStr).completions : new Array(habits.length).fill(false),
+          });
         }
-      } catch (error) {
-        console.error("Error fetching recent completions:", error);
+
+        setRecentCompletions(lastDays);
+        setCompletedHabits(recentCompletions[59].completions)
+        setTodaysHabits(recentCompletions[59].completions)
+        setCompletedToday(lastDays[59].completions.filter((val)=>val===true).length)
       }
-    };
-    fetchRecentCompletions();
-  }, []);
+    } catch (error) {
+      console.error("Error fetching recent completions:", error);
+    }
+  };
+  fetchRecentCompletions();
+},[habits]);
 
 
   // console.log("Debug",todaysHabits)
