@@ -72,7 +72,7 @@ const TaskIndex = () => {
 
       if (response.status === 200) {
         console.log("Updated DB");
-        // window.location.reload(); // Reload the whole page after update
+        window.location.reload(); // Reload the whole page after update
         await fetchRecentCompletions();
       }
     } catch (error) {
