@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Cell from './Cell'
 import axios from 'axios'
+import { subDays, format } from 'date-fns'; // read
+
 
 const Habits = () => {
   // const habits = ["Wake Up", "Meditate", "Gym", "DSA", "Web Dev", "Diet", "Junk", "Social", "Skin Care", "Reading"]
@@ -9,6 +11,7 @@ const Habits = () => {
   const [totalActiveDays, setTotalActiveDays] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0)
   const [streak, setStreak] = useState(0)
+  const [daysToRender, setDaysToRender] = useState([]);
 
   const userId = localStorage.getItem("userId");
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
@@ -34,23 +37,36 @@ const Habits = () => {
     fetchHabits();
   }, []);
 
-  useEffect(() => {
-    const fetchRecentCompletions = async () => {
-      const userId = localStorage.getItem("userId");
-      try {
-        const response = await axios.get(`${apiUrl}/users/habits/completions`, {
-          params: { userId }
+useEffect(() => {
+  const fetchRecentCompletions = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/users/habits/completions`, {
+        params: { userId }
+      });
+      if (response.status === 200) {
+        const completedData = response.data.data;
+        const dateMap = new Map();
+        completedData.forEach(entry => {
+          dateMap.set(entry.date.slice(0, 10), entry);
         });
-        if (response.status === 200) {
-          setRecentCompletions(response.data.data);
-          // console.log(response.data.data);
+
+        const lastDays = [];
+        for (let i = 59; i >=0; i--) {
+          const dateStr = format(subDays(new Date(), i), 'yyyy-MM-dd');
+          lastDays.push({
+            date: dateStr,
+            completions: dateMap.has(dateStr) ? dateMap.get(dateStr).completions : new Array(habits.length).fill(false),
+          });
         }
-      } catch (error) {
-        console.error("Error fetching recent completions:", error);
+
+        setRecentCompletions(lastDays);
       }
-    };
-    fetchRecentCompletions();
-  }, []);
+    } catch (error) {
+      console.error("Error fetching recent completions:", error);
+    }
+  };
+  fetchRecentCompletions();
+}, [habits]);
 
   useEffect(() => {
     if (!recentCompletions.length) return;
@@ -75,7 +91,7 @@ const Habits = () => {
 
     setMaxStreak(longestStreak)
 
-    for (let i = 0; i < recentCompletions.length; i++) {
+    for (let i = recentCompletions.length-1; i >=0 ; i--) {
       if (Array.isArray(recentCompletions[i].completions) && recentCompletions[i].completions.some(Boolean)) currentStreak++;
       else break;
     }

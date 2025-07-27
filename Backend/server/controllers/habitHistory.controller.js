@@ -25,7 +25,7 @@ const updateDB = asyncHandler(async (req, res) => {
     const userHabits = userHabitsDoc.habits;
 
     const targetDate = new Date(date);
-    targetDate.setHours(0, 0, 0, 0);
+    targetDate.setUTCHours(0, 0, 0, 0);
 
     let existingHistory = await HabitsHistory.findOne({ userId, date: targetDate });
 

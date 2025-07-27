@@ -3,6 +3,7 @@ import DailyProgress from './DailyProgress'
 import HabitCard from './HabitCard'
 import { HabitContext } from '../../../Context/HabitContextProvider.jsx'
 import axios from 'axios'
+import { format ,subDays} from 'date-fns'; 
 
 const TaskIndex = () => {
 
@@ -10,6 +11,7 @@ const TaskIndex = () => {
   const [completedHabits, setCompletedHabits] = useState([]);
   const [todaysHabits,setTodaysHabits] = useState([])
   const [completedToday,setCompletedToday] = useState(0)
+  const [recentCompletions,setRecentCompletions]=useState([])
 
   const userId = localStorage.getItem("userId");
 
@@ -49,9 +51,10 @@ const TaskIndex = () => {
     );
   };
   const updateDB = async () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const date = today.toISOString();
+    const date = format(new Date(), 'yyyy-MM-dd');
+    // today.setHours(0, 0, 0, 0);
+    // const date = today.toISOString();
+    console.log("DATE",date)
     
 
     try {
@@ -73,6 +76,24 @@ const TaskIndex = () => {
       console.log("Could not update DB", error);
     }
   };
+
+  //  useEffect(() => {
+  //   const fetchRecentCompletions = async () => {
+  //     const userId = localStorage.getItem("userId");
+  //     try {
+  //       const response = await axios.get(`${apiUrl}/users/habits/completions`, {
+  //         params: { userId }
+  //       });
+  //       if (response.status === 200) {
+  //         setTodaysHabits(response.data.data[0].completions);
+  //         setCompletedToday(response.data.data[0].completions.filter((val)=>val===true).length);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching recent completions:", error);
+  //     }
+  //   };
+  //   fetchRecentCompletions();
+  // }, []);
 
    useEffect(() => {
     const fetchRecentCompletions = async () => {
