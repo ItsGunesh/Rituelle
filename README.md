@@ -1,1 +1,1 @@
-This is an underdevelopment fullstack project used to track habits .
+This is a website helping users to track their habtis and shows them according to the days in a github style heatmap format . 
