@@ -7,11 +7,12 @@ import Quote from '../Quote/Quote.jsx'
 const Dashboard = () => {
   return (
     <>
-      <div className='bg-gradient-to-br from-slate-100 to-slate-200 min-h-screen w-full'>
+      <div className='bg-gradient-to-br from-slate-100 to-slate-200 w-[100%]'>
         <div className='sticky top-0 z-999'>
           <Navigator />
         </div>
-        <div className=' h-[100%] w-[100%] py-4 px-10 box-border flex gap-4'>
+        <div className='h-[100%] w-[100%] py-4 px-10 box-border gap-4 responsive-flex'>
+          {/* <div className='text-center p-2 bg-yellow-300 text-black font-bold'>MOBILE: flex-col</div> */}
           <HabitsIndex />
           <TaskIndex />
         </div>

@@ -102,7 +102,7 @@ const HabitsIndex = () => {
   return (
     <>
       <div className='flex flex-col gap-4'>
-        <div className='p-4 bg-gradient-to-r from-blue-50 via-blue-50 to-blue-50 w-[75vw] h-fit rounded-2xl drop-shadow-xl border-1 border-gray-300 '>
+        <div className='p-4 bg-gradient-to-r from-blue-50 via-blue-50 to-blue-50 md:w-[75vw] h-fit rounded-2xl drop-shadow-xl border-1 border-gray-300 '>
           <h3 className='font-bold text-2xl py-4 '>Habits Heatmap</h3>
           <Habits />
         </div>
@@ -112,11 +112,11 @@ const HabitsIndex = () => {
         <SideQuest habit={"Side Quest"} type={"Learn Next.js"}/>
         <SideQuest habit={"Side Quest"} type={"Learn Next.js"}/>
       </div> */}
-        <div className='flex justify-between '>
-          <MaxMin habit={"Weekly Progress"} type={`${past7}/7`} css={`bg-gradient-to-br from-purple-50 to-pink-100 border-purple-200 border-1 `} />
-          <MaxMin habit={"Monthly Progress"} type={`${past30}/30`} css={`bg-gradient-to-br from-purple-50 to-pink-100 border-purple-200 border-1 `} />
-          <MaxMin habit={`Best kept habit`} type={`${habits[bestHabitIndex]} for ${maxCount} Days`} css={`bg-gradient-to-br from-yellow-50 to-amber-100 border-amber-200 border-1 `} />
-          <MaxMin habit={`Worst kept habit`} type={` ${habits[worstHabitIndex]} for ${minCount} Days`} css={`bg-gradient-to-br from-orange-50 to-red-100 border-orange-200 border-1 `} />
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-3'>
+          <MaxMin habit={"Weekly Progress"} type={`${past7}/7`} css={` bg-gradient-to-br from-purple-50 to-pink-100 border-purple-200 border-1 `} />
+          <MaxMin habit={"Monthly Progress"} type={`${past30}/30`} css={` bg-gradient-to-br from-purple-50 to-pink-100 border-purple-200 border-1 `} />
+          <MaxMin habit={`Best kept habit`} type={`${habits[bestHabitIndex]} for ${maxCount} Days`} css={` bg-gradient-to-br from-yellow-50 to-amber-100 border-amber-200 border-1 `} />
+          <MaxMin habit={`Worst kept habit`} type={` ${habits[worstHabitIndex]} for ${minCount} Days`} css={`] bg-gradient-to-br from-orange-50 to-red-100 border-orange-200 border-1 `} />
         </div>
         <div>
           <Quote quote={newQuote} />
