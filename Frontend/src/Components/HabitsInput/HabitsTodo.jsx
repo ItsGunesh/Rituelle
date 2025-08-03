@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import Loader from '../Loader';
 
 const HabitsTodo = () => {
   const [input, setInput] = useState('');
   const [habits, setHabits] = useState([]);
   const [editIdx, setEditIdx] = useState(null);
   const [editValue, setEditValue] = useState('');
+  const [loader,setLoader] = useState(false)
 
   const navigate = useNavigate();
 
@@ -38,6 +40,7 @@ const HabitsTodo = () => {
 
   const handleSubmit = async () => {
     // console.log('Final habits:', habits);
+    setLoader(true)
 
     const userId = sessionStorage.getItem("userId");
     // const userId = localStorage.getItem("userId");
@@ -59,8 +62,11 @@ const HabitsTodo = () => {
         navigate("/dashboard")
       }
 
-
+      setLoader(false)
+      
+      
     } catch (error) {
+      setLoader(false)
       console.log(error)
     }
 
@@ -135,6 +141,7 @@ const HabitsTodo = () => {
         >
           Ready
         </button>
+        {loader && <Loader/>}
       </div>
       <div>
         <p className='text-lg text-red-600 font-bold mt-6'>Be sure , once a commitment made , cannot be changed...</p>

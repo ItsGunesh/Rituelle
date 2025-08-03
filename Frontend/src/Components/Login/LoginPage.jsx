@@ -3,6 +3,7 @@ import { set } from 'mongoose'
 import React, { useState, UseState } from 'react'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Loader from '../Loader'
 
 const LoginPage = () => {
 
@@ -13,9 +14,11 @@ const LoginPage = () => {
         password: ""
     })
     const [errorMessage,setErrorMessage]=useState()
+    const [loader,setLoader] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoader(true)
 
         const apiUrl = import.meta.env.VITE_BACKEND_URL
 
@@ -33,10 +36,12 @@ const LoginPage = () => {
                 // localStorage.setItem("userId", userId);
                 navigate('/dashboard');
             }
+            setLoader(false)
 
             // console.log(response)
 
         } catch (error) {
+            setLoader(false)
             // console.log("Error during login:", error)
             if(error.response.data.statusCode===400){
                 setErrorMessage(error.response.data.data)
@@ -68,6 +73,7 @@ const LoginPage = () => {
                     <div className='py-2'>
                         <button type="submit" className='font-bold text-xl text-black px-4 py-1 rounded-md hover:transition-transform duration-100 hover:scale-110 hover:text-black'>Login</button>
                     </div>
+                    {loader && <Loader />}
                 </div>
             </form>
             <div>

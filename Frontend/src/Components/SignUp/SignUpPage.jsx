@@ -1,6 +1,7 @@
 import React , {useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import Loader from '../Loader'
 
 const SignUpPage = () => {
 
@@ -11,12 +12,14 @@ const SignUpPage = () => {
         username: ""
     })
     const [errorMessage,setErrorMessage]=useState()
+    const [loader,setLoader] = useState(false)
 
     const navigate = useNavigate();
     const apiUrl = import.meta.env.VITE_BACKEND_URL
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoader(true)
 
         try {
             const response = await axios.post(`${apiUrl}/api/users/signup`, formData,
@@ -36,8 +39,11 @@ const SignUpPage = () => {
                 // localStorage.setItem("userId", userId);
                 navigate('/commitment')
             }
+
+            setLoader(false)
         } catch (error) {
             // console.log("Error during signup:", error)
+            setLoader(false)
             if(error.response.data.statusCode===400){
                 setErrorMessage(error.response.data.data)
             }
@@ -81,6 +87,7 @@ const SignUpPage = () => {
                     <div className='p-2'>
                         <button type="submit" className='font-bold text-xl text-black px-4 py-1 rounded-md hover:transition-transform duration-100 hover:scale-110 hover:text-black'>SignUp</button>
                     </div>
+                    {loader && <Loader />}
                 </div>
             </form>
             <div>
