@@ -9,3 +9,15 @@
   font-family: 'Amaranth', sans-serif;
   font-weight: 700;
 }
+
+/* Custom responsive flex classes */
+.responsive-flex {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .responsive-flex {
+    flex-direction: row;
+  }
+}
