@@ -84,9 +84,9 @@ const SignUpPage = () => {
                             setFormData({ ...formData, username: e.target.value })
                         }} className='border-2 bg-white border-gray-400 items-center' />
                     </div>
-                    <div className='p-2'>
+                    {!loader && <div className='p-2'>
                         <button type="submit" className='font-bold text-xl text-black px-4 py-1 rounded-md hover:transition-transform duration-100 hover:scale-110 hover:text-black'>SignUp</button>
-                    </div>
+                    </div>}
                     {loader && <Loader />}
                 </div>
             </form>

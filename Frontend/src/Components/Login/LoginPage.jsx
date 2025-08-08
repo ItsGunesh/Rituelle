@@ -70,9 +70,9 @@ const LoginPage = () => {
                         <p className='text-left py-1 font-bold '>Enter your password</p>
                         <input type="password" name="password" id="password" className='border-2 bg-white border-gray-400 items-center' onChange={(e) => { setFormData({ ...formData, password: e.target.value }) }} />
                     </div>
-                    <div className='py-2'>
+                    {!loader && <div className='py-2'>
                         <button type="submit" className='font-bold text-xl text-black px-4 py-1 rounded-md hover:transition-transform duration-100 hover:scale-110 hover:text-black'>Login</button>
-                    </div>
+                    </div>}
                     {loader && <Loader />}
                 </div>
             </form>

@@ -134,13 +134,13 @@ const HabitsTodo = () => {
             </li>
           ))}
         </ul>
-        <button
+        {!loader && <button
           className="w-full font-bold text-xl text-black px-4 py-1 rounded-md hover:transition-transform duration-100 hover:scale-110 hover:text-black "
           onClick={handleSubmit}
           disabled={habits.length === 0}
         >
           Ready
-        </button>
+        </button>}
         {loader && <Loader/>}
       </div>
       <div>
