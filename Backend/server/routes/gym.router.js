@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { fetchProgress , updateProgress } from "../controllers/gymProgress.controller.js";
+import { fetchProgress , updateSession , addExercise } from "../controllers/gymProgress.controller.js";
 
 const router = Router()
 
 router.route("/fetchprogress").get(fetchProgress)
-router.route("/updateprogress").post(updateProgress)
+router.route("/updateprogress").post(updateSession)
+router.route("addexercise").post(addExercise)

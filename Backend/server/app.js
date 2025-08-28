@@ -28,9 +28,11 @@ import userRouter from "./routes/user.router.js"
 import habitsRouter from "./routes/habits.router.js"
 // import habitHistoryRouter from "./routes/habitHistory.router.js"
 import { userRegister } from "./controllers/user.controller.js"
+import gymRouter from "./routes/gym.router.js"
 
 app.use("/api/users",userRouter)
 app.use("/users/habits", habitsRouter);
+app.use("/api/gym",gymRouter)
 // app.use("/habitHistory",habitHistoryRouter)
 
 export {app}
