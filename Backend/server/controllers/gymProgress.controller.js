@@ -4,8 +4,10 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { GymProgress } from "../models/gym.model.js";
 
 const fetchProgress = asyncHandler(async (req, res) => {
-    const { userId } = req.user;
-    const { name } = req.body;
+    // const { userId } = req.user;
+    // const { name } = req.body;
+
+    const { userId, name } = req.body;
 
     if (!name) {
         throw new ApiError(401, "Exercise name required");
@@ -35,8 +37,10 @@ const fetchProgress = asyncHandler(async (req, res) => {
 
 
 const updateSession = asyncHandler(async (req, res) => {
-    const { userId } = req.user;
-    const { name, sets } = req.body;
+    // const { userId } = req.user;
+    // const { name, sets } = req.body;
+
+    const { userId, name , sets } = req.body;
 
     if (!name || !sets || !Array.isArray(sets) || sets.length !== 3) {
         throw new ApiError(400, "Exercise name and exactly 3 sets are required");
@@ -84,8 +88,10 @@ const updateSession = asyncHandler(async (req, res) => {
 
 
 const addExercise = asyncHandler(async (req, res) => {
-    const { userId } = req.user;
-    const { name } = req.body;
+    // const { userId } = req.user;
+    // const { name } = req.body;
+
+    const { userId, name } = req.body;
 
     if (!name) {
         throw new ApiError(400, "Exercise name is required");

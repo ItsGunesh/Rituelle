@@ -5,4 +5,6 @@ const router = Router()
 
 router.route("/fetchprogress").get(fetchProgress)
 router.route("/updateprogress").post(updateSession)
-router.route("addexercise").post(addExercise)
+router.route("/addexercise").post(addExercise)
+
+export default router
