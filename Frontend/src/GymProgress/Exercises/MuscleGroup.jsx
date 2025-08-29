@@ -1,18 +1,40 @@
 import React, { useState } from "react";
 import ExerciseItem from "./ExerciseItem";
+import axios from "axios";
 
 const MuscleGroup = ({ group, exercises }) => {
-  const [open, setOpen] = useState(group === "Back");
+  const [open, setOpen] = useState(group);
   const [addBox, setAddBox] = useState(false);
   const [addExercise, setAddExercise] = useState("");
+
+  let newExercises = exercises
+
+  const apiUrl = import.meta.env.VITE_BACKEND_URL
+  const userId = sessionStorage.getItem("userId")
 
   const toggleAdd = (e) => {
     e.stopPropagation();
     setAddBox(!addBox);
   };
 
-  const handleAddExercise = () => {
+  const handleAddExercise = async() => {
     if (addExercise.trim() === "") return;
+
+    try {
+      const response = await axios.post(`${apiUrl}/api/gym/addexercise`,{name:addExercise,userId,muscleGroup:group},{
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials:true
+      })
+
+      if(response.status === 200){
+        console.log("addExercise worked successfully")
+        newExercises = [...exercises,addExercise] 
+      }
+    } catch (error) {
+      
+    }
     console.log("New exercise added:", addExercise);
     setAddExercise("");
     setAddBox(false);
@@ -63,7 +85,7 @@ const MuscleGroup = ({ group, exercises }) => {
 
       {open && (
         <ul className="mt-2 ml-4 space-y-1">
-          {exercises.map((exercise, idx) => (
+          {newExercises.map((exercise, idx) => (
             <ExerciseItem key={idx} name={exercise} />
           ))}
         </ul>
