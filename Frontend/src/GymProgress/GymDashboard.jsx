@@ -9,10 +9,10 @@ const GymDashboard = () => {
         <>
             <div className='bg-gradient-to-br from-slate-100 to-slate-200 h-full'>
                 <Navigator />
-                <div className='mx-10'>
+                <div className='mx-5'>
                     <GymNav />
                 </div>
-                <div className='mx-15 flex'>
+                <div className='sm:mx-15 md:mx-5 flex responsive-flex'>
                     <MuscleGroupBox/>
                     <MainIndex/>
                 </div>

@@ -15,7 +15,7 @@ const GymNav = () => {
             <p className='text-lg'>Track your workout progress and visualize your gains</p>
         </div>
         <div className='border py-2 px-4 rounded-2xl bg-slate-800'>
-            <p className='font-bold text-white' onClick={navHome}>Back to Habits</p>
+            <p className='font-bold text-white text-center' onClick={navHome}>Back to Habits</p>
         </div>
       </div>
     </>

@@ -29,7 +29,7 @@ const MainIndex = () => {
   return (
     <div className="w-full px-4 pb-4">
       <ExerciseChart data={data} name="Pull-ups" />
-      <div className="flex gap-4 mt-4">
+      <div className="flex gap-4 mt-4 responsive-flex">
         <SessionHistory sessions={sessions} />
         <AddSession onAdd={handleAddSession} />
       </div>
