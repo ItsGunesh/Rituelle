@@ -7,7 +7,7 @@ const MuscleGroupBox = () => {
     Bicep: [],
     Chest: [],
     Tricep: [],
-    Shoulders: [],
+    Shoulder: [],
     Legs: [],
     Abs:[]
   };

@@ -88,13 +88,13 @@ const updateSession = asyncHandler(async (req, res) => {
 
 
 const addExercise = asyncHandler(async (req, res) => {
-    // const { userId } = req.user;
-    // const { name } = req.body;
-
-    const { userId, name } = req.body;
+    const { userId, name, muscleGroup } = req.body;
 
     if (!name) {
         throw new ApiError(400, "Exercise name is required");
+    }
+    if (!muscleGroup) {
+        throw new ApiError(400, "Muscle group is required");
     }
 
     try {
@@ -114,7 +114,7 @@ const addExercise = asyncHandler(async (req, res) => {
     if (!fetchedUser) {
         fetchedUser = await GymProgress.create({
             userId,
-            exercises: [{ name, sessions: [defaultSession] }]
+            exercises: [{ name, muscleGroup, sessions: [defaultSession] }]
         });
     } else {
         const alreadyExists = fetchedUser.exercises.some(
@@ -124,17 +124,18 @@ const addExercise = asyncHandler(async (req, res) => {
             throw new ApiError(409, "Exercise with this name already exists");
         }
 
-        fetchedUser.exercises.push({ name, sessions: [defaultSession] });
+        fetchedUser.exercises.push({ name, muscleGroup, sessions: [defaultSession] });
         await fetchedUser.save();
     }
 
     res.status(200).json(
-        new ApiResponse(200, { name, sessions: [defaultSession] }, "Exercise added successfully")
+        new ApiResponse(200, { name, muscleGroup, sessions: [defaultSession] }, "Exercise added successfully")
     );
     } catch (error) {
-        throw new ApiError(401,"Unable to add exercise",error)
+        throw new ApiError(401,"Could not add exercise",error)
     }
 });
+
 
 
 

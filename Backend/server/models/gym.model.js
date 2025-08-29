@@ -35,6 +35,11 @@ const exerciseSchema = new Schema({
     type: String,
     required: true
   },
+  muscleGroup: {
+    type: String,
+    required: true,
+    enum: ['Back', 'Bicep', 'Chest', 'Tricep', 'Shoulder', 'Legs', 'Abs']
+  },
   sessions: [sessionSchema]
 });
 
