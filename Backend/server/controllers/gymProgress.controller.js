@@ -3,6 +3,27 @@ import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { GymProgress } from "../models/gym.model.js";
 
+const fetchExeData = asyncHandler(async(req,res)=>{
+    const {userId} = req.query
+    console.log(userId)
+
+    try {
+        const fetchedUser = await GymProgress.findOne({ userId });
+    if (!fetchedUser) {
+        throw new ApiError(404, "User progress not found");
+    }
+
+    const exercises = fetchedUser.exercises
+
+    res.status(200).json(
+        new ApiResponse(200,exercises,"Fetched exercises successfully")
+    )
+    } catch (error) {
+        throw new ApiError(401,"Unable to fetch data",error)
+    }
+
+})
+
 const fetchProgress = asyncHandler(async (req, res) => {
     // const { userId } = req.user;
     // const { name } = req.body;
@@ -142,5 +163,6 @@ const addExercise = asyncHandler(async (req, res) => {
 export {
     fetchProgress,
     updateSession,
-    addExercise
+    addExercise,
+    fetchExeData
 }

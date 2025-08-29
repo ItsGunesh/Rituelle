@@ -3,7 +3,7 @@ import ExerciseItem from "./ExerciseItem";
 import axios from "axios";
 
 const MuscleGroup = ({ group, exercises }) => {
-  const [open, setOpen] = useState(group);
+  const [open, setOpen] = useState(!group);
   const [addBox, setAddBox] = useState(false);
   const [addExercise, setAddExercise] = useState("");
 
