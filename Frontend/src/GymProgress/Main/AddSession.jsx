@@ -1,13 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useExerciseStore } from '../useExerciseStore.js';
+import axios from "axios";
+import {useNavigate,useLocation} from "react-router-dom"
 
 const AddSession = ({ onAdd }) => {
+
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const apiUrl = import.meta.env.VITE_BACKEND_URL
+  const userId = sessionStorage.getItem("userId")
+  const selectedExercise = useExerciseStore(state => state.selectedExercise);
+
   const defaultSets = [
     { weight: 0, reps: 0 },
     { weight: 0, reps: 0 },
     { weight: 0, reps: 0 },
   ];
-
   const [sets, setSets] = useState(defaultSets);
+
+  const updateSets = async ()=>{
+    try {
+      const response = await axios.post(`${apiUrl}/api/gym/updateprogress`,{userId,name:selectedExercise,sets},{
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials:true
+      })
+
+      if(response.status===200){
+        console.log(response)
+        onAdd(sets);
+      }
+    } catch (error) {
+      console.log("Error in updateSets",error)
+    }
+  }
+
+
+
 
   const handleChange = (index, field, value) => {
     const updatedSets = [...sets];
@@ -35,13 +66,17 @@ const AddSession = ({ onAdd }) => {
     const validSets = sets.filter((s) => s.weight > 0 && s.reps > 0);
     if (validSets.length === 0) return;
 
-    onAdd(validSets);
-    setSets(defaultSets);
+    updateSets()
+
+    onAdd(sets);
+    // setSets(defaultSets);
   };
+
+  // onAdd(sets)
 
   return (
     <div className="bg-green-50 rounded-2xl shadow-md p-4 flex-1">
-      <h3 className="text-lg font-bold mb-3">Add New Session</h3>
+      <h3 className="text-lg font-bold mb-3 text-center">Add New Session</h3>
       <div className="flex flex-col gap-3">
         {sets.map((set, idx) => (
           <div key={idx} className="flex justify-between gap-2">

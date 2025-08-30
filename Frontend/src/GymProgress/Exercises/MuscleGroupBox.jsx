@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MuscleGroup from './MuscleGroup';
 import axios from 'axios';
+import { useExerciseStore } from '../useExerciseStore.js';
 
 const initialMuscleGroups = {
   Back: [],

@@ -7,7 +7,7 @@ import MainIndex from './Main/MainIndex.jsx'
 const GymDashboard = () => {
     return (
         <>
-            <div className='bg-gradient-to-br from-slate-100 to-slate-200 h-full'>
+            <div className='bg-gradient-to-br from-slate-100 to-slate-200 h-full max-w-screen'>
                 <Navigator />
                 <div className='mx-5'>
                     <GymNav />

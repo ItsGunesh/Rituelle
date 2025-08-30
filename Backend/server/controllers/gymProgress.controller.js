@@ -5,7 +5,7 @@ import { GymProgress } from "../models/gym.model.js";
 
 const fetchExeData = asyncHandler(async(req,res)=>{
     const {userId} = req.query
-    console.log(userId)
+    // console.log(userId)
 
     try {
         const fetchedUser = await GymProgress.findOne({ userId });
@@ -28,7 +28,7 @@ const fetchProgress = asyncHandler(async (req, res) => {
     // const { userId } = req.user;
     // const { name } = req.body;
 
-    const { userId, name } = req.body;
+    const { userId, name } = req.query;
 
     if (!name) {
         throw new ApiError(401, "Exercise name required");

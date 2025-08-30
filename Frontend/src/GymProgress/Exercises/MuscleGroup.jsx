@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ExerciseItem from "./ExerciseItem";
 import axios from "axios";
+import { useExerciseStore } from '../useExerciseStore.js';
 
 const MuscleGroup = ({ group, exercises }) => {
   const [open, setOpen] = useState(!group);
   const [addBox, setAddBox] = useState(false);
   const [addExercise, setAddExercise] = useState("");
+  const selectedExercise = useExerciseStore(state => state.selectedExercise);
+  const setSelectedExercise = useExerciseStore(state => state.setSelectedExercise);
 
   let newExercises = exercises
 
@@ -39,6 +42,14 @@ const MuscleGroup = ({ group, exercises }) => {
     setAddExercise("");
     setAddBox(false);
   };
+
+  const handleClick = (exercise)=>{
+    setSelectedExercise(exercise)
+  }
+
+  useEffect(()=>{
+    // console.log(selectedExercise)
+  },[selectedExercise])
 
   return (
     <div className="mb-3 relative">
@@ -86,7 +97,7 @@ const MuscleGroup = ({ group, exercises }) => {
       {open && (
         <ul className="mt-2 ml-4 space-y-1">
           {newExercises.map((exercise, idx) => (
-            <ExerciseItem key={idx} name={exercise} />
+            <ExerciseItem key={idx} name={exercise} onClick={()=>handleClick(exercise)} />
           ))}
         </ul>
       )}
