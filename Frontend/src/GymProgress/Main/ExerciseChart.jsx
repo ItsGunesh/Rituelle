@@ -4,8 +4,8 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContai
 const ExerciseChart = ({ data, name }) => {
   return (
     <div className="bg-white rounded-2xl shadow-md p-4 mb-4">
-      <h2 className="text-lg font-bold">{name}</h2>
-      <p className="text-sm text-gray-500 mb-4">Back Exercise</p>
+      <h2 className="text-2xl font-bold pb-4">{name}</h2>
+      {/* <p className="text-sm text-gray-500 mb-4">Back Exercise</p> */}
       <ResponsiveContainer width="100%" height={250}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />

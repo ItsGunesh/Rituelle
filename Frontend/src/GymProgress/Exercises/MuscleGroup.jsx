@@ -60,7 +60,7 @@ const MuscleGroup = ({ group, exercises }) => {
         {group}
         {open && (
           <p
-            className="text-xs bg-white rounded-2xl px-2 py-1 cursor-pointer shadow-md"
+            className="text-xs bg-white border rounded-2xl px-2 py-1 cursor-pointer border-slate-200 hover:shadow-lg"
             onClick={toggleAdd}
           >
             Add Exercise

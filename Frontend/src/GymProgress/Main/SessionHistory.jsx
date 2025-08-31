@@ -29,7 +29,7 @@ const SessionHistory = ({ sessions }) => {
         }
     }, [selectedExercise]);
 
-    const lastTwoSessions = fetchedSessions.slice(-2);
+    const lastTwoSessions = fetchedSessions.slice(0,2);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
