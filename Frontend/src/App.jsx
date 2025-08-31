@@ -11,6 +11,7 @@ import SignUpIndex from './Components/SignUp/SignUpIndex.jsx'
 import HabitsTodoIndex from './Components/HabitsInput/HabitsTodoIndex.jsx'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Dashboard from './Components/Main/Dashboard.jsx'
+import GymDashboard from './GymProgress/GymDashboard.jsx'
 
 
 
@@ -26,6 +27,7 @@ function App() {
             <Route path="/login" element={<LoginIndex />} />
             <Route path="/signup" element={<SignUpIndex />} />
             <Route path="/commitment" element={<HabitsTodoIndex />} />
+            <Route path="/gym" element={<GymDashboard/>}/>
           </Routes>
         </BrowserRouter>
       </HabitContextProvider>

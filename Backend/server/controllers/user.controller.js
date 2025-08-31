@@ -205,10 +205,10 @@ const logoutUser = asyncHandler(async(req, res) => {
 const getUser = asyncHandler(async(req,res)=>{
     try {
         const userId = req.query.userId
-        console.log(userId)
+        // console.log(userId)
 
         const user = await User.findById(`${userId}`)
-        console.log(user)
+        // console.log(user)
         const username = user.username
 
         res.status(200).json(
